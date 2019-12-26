@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 using namespace std;
 class Command {
@@ -15,6 +16,9 @@ protected:
 };
 
 class openDataServer : public Command {
+    unordered_map<string, int> val_map;
+    void processInfo(char* );
+    void openServer(int );
     int execute(vector<string> );
 };
 #endif //FLYSIM_COMMAND_H
