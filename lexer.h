@@ -9,7 +9,6 @@ class Lexer{
 private:
 
 public:
-    Lexer(){};
-    vector<string> Lex(const string fileName);
+    vector<string> lex(const string fileName);
 };
 #endif // FlySimul lexer.h

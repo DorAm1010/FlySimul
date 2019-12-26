@@ -5,11 +5,11 @@
 using namespace std;
 
 
-vector<string> Lexer::Lex(const string fileName) {
+vector<string> Lexer::lex(const string fileName) {
     vector<string> words;
 
     ifstream objFile;
-    objFile.open("fly.txt");
+    objFile.open(fileName);
 
     try {
         if (!objFile.is_open()) {
