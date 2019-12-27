@@ -1,3 +1,4 @@
+
 //
 // Created by dor on 12/20/19.
 //
@@ -7,18 +8,22 @@
 
 #include <string>
 #include <vector>
-#include <unordered_map>
+#include <map>
+#include "varStruct.h"
 
 using namespace std;
 class Command {
 protected:
-    virtual int execute(vector<string> )=0;
+    virtual int execute()=0;
+public:
+    static map<string,varStruct> varMap;
 };
 
 class openDataServer : public Command {
-    unordered_map<string, int> val_map;
-    void processInfo(char* );
-    void openServer(int );
-    int execute(vector<string> );
+    int execute();
+};
+
+class DefineVarCommand : public Command {
+    int execute();
 };
 #endif //FLYSIM_COMMAND_H
