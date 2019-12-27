@@ -7,7 +7,9 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include <unordered_map>
+#include "varStruct.h"
 
 using namespace std;
 class Command {
@@ -24,5 +26,9 @@ class openDataServer : public Command {
 class connectClientImpl : public Command {
     int execute();
     void messageSim(int );
+};
+
+class DefineVarCommand : public Command {
+    int execute();
 };
 #endif //FLYSIM_COMMAND_H
