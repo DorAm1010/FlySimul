@@ -12,13 +12,17 @@
 using namespace std;
 class Command {
 protected:
-    virtual int execute(vector<string> )=0;
+    virtual int execute()=0;
 };
 
 class openDataServer : public Command {
-    unordered_map<string, int> val_map;
     void processInfo(char* );
     void openServer(int );
-    int execute(vector<string> );
+    int execute();
+};
+
+class connectClientImpl : public Command {
+    int execute();
+    void messageSim(int );
 };
 #endif //FLYSIM_COMMAND_H
