@@ -5,7 +5,6 @@
 #include <vector>
 #include <unordered_map>
 #include <map>
-#include "varStruct.h"
 
 using namespace std;
 class Command {
