@@ -1,14 +1,10 @@
-//
-// Created by dor on 12/20/19.
-//
-
 #ifndef FLYSIM_COMMAND_H
 #define FLYSIM_COMMAND_H
 
 #include <string>
 #include <vector>
-#include <map>
 #include <unordered_map>
+#include <map>
 #include "varStruct.h"
 
 using namespace std;
