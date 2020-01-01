@@ -1,3 +1,8 @@
+/**
+ * Command header containing declarations of command abstract class
+ * implementing classes, and of course the command abstract class itself.
+ * */
+
 #ifndef FLYSIM_COMMAND_H
 #define FLYSIM_COMMAND_H
 
@@ -5,6 +10,7 @@
 #include <vector>
 #include <unordered_map>
 #include <map>
+#include "mutex"
 
 using namespace std;
 class Command {
@@ -18,7 +24,7 @@ class openDataServer : public Command {
     int execute();
 };
 
-class connectClientImpl : public Command {
+class connectControlClient : public Command {
     int execute();
     void messageSim(int );
 };

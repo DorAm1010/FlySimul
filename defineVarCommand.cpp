@@ -1,10 +1,8 @@
 //
 // Created by Laliv on 20/12/2019.
 //
-#include "Command.h"
+#include "command.h"
 #include "readingData.h"
-#include <vector>
-#include <string>
 
 using namespace std;
 

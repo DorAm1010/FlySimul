@@ -8,12 +8,14 @@
 
 using namespace std;
 
-class varStruct {
+class VarStruct {
+public:
     double val;
     bool needToChangeSim;
     string sim;
-    varStruct(string s, double v, bool changeSim):val(v), needToChangeSim(changeSim),sim(s) {};
+public:
+    VarStruct(string s, double v, bool changeSim);
+    void setVal(double new_val);
 };
-
 
 #endif //EX3_VARSTRUCT_H

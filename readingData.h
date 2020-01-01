@@ -5,10 +5,8 @@
 #ifndef EX3_READINGDATA_H
 #define EX3_READINGDATA_H
 
-#include <vector>
-#include <string>
-#include <unordered_map>
 #include "varStruct.h"
+#include "command.h"
 
 using namespace std;
 
@@ -25,29 +23,41 @@ private:
     int index;
 
     /*vector of the instructions separate to words*/
-    vector<string>* words;
+    vector<string> words;
 
-    /*map from name to varStruct*/
-    unordered_map<string,varStruct>* nameToVariableMap;
+    /*map from name to VarStruct*/
+    unordered_map<string,VarStruct*> nameToVariableMap;
 
-    /*map from sim address to varStruct*/
-    unordered_map<string,varStruct>* simToVariableMap;
+    /*map from sim address to VarStruct*/
+    unordered_map<string, VarStruct*> simToVariableMap;
+
+    /*should the program still run*/
+    bool should_run;
+
+    /*command map*/
+    unordered_map<string, Command*> command_map;
 
 public:
-    /* Static access method. */
+/* Static access method. */
     static ReadingData* getInstance();
 
-    static unordered_map<string,varStruct>* getNameToVariableMap();
+    unordered_map<string,VarStruct*> getNameToVariableMap();
 
-    static unordered_map<string,varStruct>* getSimToVariableMap();
+    unordered_map<string,VarStruct*> getSimToVariableMap();
 
-    static vector<string>* getWordsVector();
+    vector<string> getWordsVector();
 
-    static void setWords(vector<string>* v);
+    void setWords(vector<string> v);
 
-    static int getInd();
+    int getInd();
 
-    static void incInd(int add);
+    void incInd(int add);
+
+    void setShouldRun(bool b);
+
+    bool getShouldRun ();
+
+    void initMapsKeys();
 };
 
 

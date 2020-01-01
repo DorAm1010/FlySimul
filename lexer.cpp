@@ -1,10 +1,16 @@
+/**
+ * Lexer class that is in charge of processing the information in input file.
+ * */
 #include "lexer.h"
 #include <fstream>
 #include <string>
 
 using namespace std;
 
-
+/**
+ * This method reads line by line the input file, fileName, that has
+ * a set  of instructions on how to fly the plane in the simulator.
+ * */
 vector<string> Lexer::lex(const string fileName) {
     vector<string> words;
 
