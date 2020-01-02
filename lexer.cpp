@@ -34,7 +34,7 @@ vector<string> Lexer::Lex(const string fileName) {
             }
             else
             {
-                if(x != '/' | word.size() > 1) {
+                if(word != "\"" | x != '/') {
                     word = word + x;
                 }
             }
