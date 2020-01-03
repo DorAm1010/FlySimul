@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <map>
 #include "mutex"
+#include "Expression.h"
 
 using namespace std;
 class Command {
@@ -35,5 +36,13 @@ class DefineVarCommand : public Command {
 
 class printCommand : public Command {
     int execute();
+};
+
+using namespace std;
+
+class EvaluateCommand: public Command {
+protected:
+    double evaluate(string expString);
+    //int execute () {return 1;}
 };
 #endif //FLYSIM_COMMAND_H
