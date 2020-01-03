@@ -3,12 +3,22 @@
 //
 #include "varStruct.h"
 
-VarStruct::VarStruct(string _s, double _val, bool _b) {
-    this->needToChangeSim = _b;
-    this->val = _val;
-    this->sim = _s;
-}
-
 void VarStruct::setVal(double new_val) {
     this->val = new_val;
+}
+
+void VarStruct::setNeedToChangeSim(bool needToChangeSim) {
+    VarStruct::needToChangeSim = needToChangeSim;
+}
+
+void VarStruct::setSim(const string &sim) {
+    VarStruct::sim = sim;
+}
+
+const string &VarStruct::getSim() const {
+    return sim;
+}
+
+bool VarStruct::isNeedToChangeSim() const {
+    return needToChangeSim;
 }

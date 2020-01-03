@@ -10,11 +10,10 @@
 
 using namespace std;
 
-class ReadingData
-{
+class ReadingData {
 private:
     /* Here will be the instance stored. */
-    static ReadingData* instance;
+    static ReadingData *instance;
 
     /* Private constructor to prevent instancing. */
     ReadingData();
@@ -26,24 +25,26 @@ private:
     vector<string> words;
 
     /*map from name to VarStruct*/
-    unordered_map<string,VarStruct*> nameToVariableMap;
+    unordered_map<string, VarStruct *> nameToVariableMap;
 
     /*map from sim address to VarStruct*/
-    unordered_map<string, VarStruct*> simToVariableMap;
+    unordered_map<string, VarStruct *> simToVariableMap;
 
     /*should the program still run*/
     bool should_run;
 
-    /*command map*/
-    unordered_map<string, Command*> command_map;
+    // information map about existing vars that update the simulator
+    unordered_map<string, int> indexMap;
+
+    unordered_map<string, int> nameToIndexMap;
 
 public:
 /* Static access method. */
-    static ReadingData* getInstance();
+    static ReadingData *getInstance();
 
-    unordered_map<string,VarStruct*> getNameToVariableMap();
+    unordered_map<string, VarStruct *> getNameToVariableMap();
 
-    unordered_map<string,VarStruct*> getSimToVariableMap();
+    unordered_map<string, VarStruct *> getSimToVariableMap();
 
     vector<string> getWordsVector();
 
@@ -55,10 +56,23 @@ public:
 
     void setShouldRun(bool b);
 
-    bool getShouldRun ();
+    bool getShouldRun();
 
-    void initMapsKeys();
-};
+    void addToNameMap(string, VarStruct *);
+
+    void addToSimMap(string, VarStruct *);
+//
+//    int findInNameMap(const string&);
+//
+//    int findInSimMap(const string&);
+//
+//    void updateInNameMap(const string&, double);
+//
+//    void updateInSimMap(const string&, double);
+
+    void updateFromSimulator(vector<double>);
+
+}
 
 
 #endif //EX3_READINGDATA_H

@@ -9,13 +9,19 @@
 using namespace std;
 
 class VarStruct {
-public:
     double val;
     bool needToChangeSim;
     string sim;
 public:
-    VarStruct(string s, double v, bool changeSim);
+    void setNeedToChangeSim(bool needToChangeSim);
+
+    void setSim(const string &sim);
+
+    const string &getSim() const;
+
     void setVal(double new_val);
+
+    bool isNeedToChangeSim() const;
 };
 
 #endif //EX3_VARSTRUCT_H

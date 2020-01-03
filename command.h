@@ -26,10 +26,14 @@ class openDataServer : public Command {
 
 class connectControlClient : public Command {
     int execute();
-    void messageSim(int );
+    void messageSim();
 };
 
 class DefineVarCommand : public Command {
+    int execute();
+};
+
+class printCommand : public Command {
     int execute();
 };
 #endif //FLYSIM_COMMAND_H

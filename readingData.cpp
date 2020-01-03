@@ -7,270 +7,6 @@
 /* Null, because instance will be initialized on demand. */
 ReadingData* ReadingData::instance = 0;
 
-void ReadingData::initMapsKeys() {
-    string sim;
-    for (int i = 1; i < 36; i++) {
-        // init i'th entry
-        switch (i) {
-            case 1: {
-                // airspeed-indicator_indicated-speed-kt
-                sim = "/instrumentation/airspeed-indicator/indicated-speed-kt";
-                VarStruct varStruct1(sim, 0, false);
-                simToVariableMap["airspeed-indicator_indicated-speed-kt"] = &varStruct1;
-                break;
-            }
-            case 2: {
-                // time_warp
-                sim = "/sim/time/warp";
-                VarStruct varStruct2(sim, 0, false);
-                simToVariableMap["time_warp"] = &varStruct2;
-                break;
-            }
-            case 3: {
-                // switches_magnetos
-                sim = "/controls/switches/magnetos";
-                VarStruct varStruct3(sim, 0, false);
-                simToVariableMap["switches_magnetos"] = &varStruct3;
-                break;
-            }
-            case 4: {
-                // heading-indicator_offset-deg
-                sim = "/instrumentation/heading-indicator/offset-deg";
-                VarStruct varStruct4(sim, 0, false);
-                simToVariableMap["heading-indicator_offset-deg"] = &varStruct4;
-                break;
-            }
-            case 5:{
-                // altimeter_indicated-altitude-ft
-                sim = "/instrumentation/altimeter/indicated-altitude-ft";
-                VarStruct varStruct5(sim, 0, false);
-                simToVariableMap["altimeter_indicated-altitude-ft"] = &varStruct5;
-                break;
-            }
-            case 6: {
-                // altimeter_pressure-alt-ft
-                sim = "/instrumentation/altimeter/pressure-alt-ft";
-                VarStruct varStruct6(sim, 0, false);
-                simToVariableMap["altimeter_pressure-alt-ft"] = &varStruct6;
-                break;
-            }
-            case 7: {
-                // attitude-indicator_indicated-pitch-deg
-                sim = "/instrumentation/attitude-indicator/indicated-pitch-deg";
-                VarStruct varStruct7(sim, 0, false);
-                simToVariableMap["attitude-indicator_indicated-pitch-deg"] = &varStruct7;
-                break;
-            }
-            case 8:{
-                // attitude-indicator_indicated-roll-deg
-                sim = "/instrumentation/attitude-indicator/indicated-roll-deg";
-                VarStruct varStruct8(sim, 0, false);
-                simToVariableMap["attitude-indicator_indicated-roll-deg"] = &varStruct8;
-            }
-
-                break;
-            case 9:{
-                // attitude-indicator_internal-pitch-deg
-                sim = "/instrumentation/attitude-indicator/internal-pitch-deg";
-                VarStruct varStruct9(sim, 0, false);
-                simToVariableMap["attitude-indicator_internal-pitch-deg"] = &varStruct9;
-                break;
-            }
-            case 10:{
-                // attitude-indicator_internal-roll-deg
-                sim = "/instrumentation/attitude-indicator/internal-roll-deg";
-                VarStruct varStruct10(sim, 0, false);
-                simToVariableMap["attitude-indicator_internal-roll-deg"] = &varStruct10;
-                break;
-            }
-            case 11:{
-                // encoder_indicated-altitude-ft
-                sim = "/instrumentation/encoder/indicated-altitude-ft";
-                VarStruct varStruct11(sim, 0, false);
-                simToVariableMap["encoder_indicated-altitude-ft"] = &varStruct11;
-                break;
-            }
-            case 12:{
-                // encoder_pressure-alt-ft
-                sim = "/instrumentation/encoder/pressure-alt-ft";
-                VarStruct varStruct12(sim, 0, false);
-                simToVariableMap["encoder_pressure-alt-ft"] = &varStruct12;
-                break;
-            }
-            case 13:{
-                // gps_indicated-altitude-ft
-                sim = "/instrumentation/gps/indicated-altitude-ft";
-                VarStruct varStruct13(sim, 0, false);
-                simToVariableMap["gps_indicated-altitude-ft"] = &varStruct13;
-                break;
-            }
-            case 14:{
-                // gps_indicated-ground-speed-kt
-                sim = "/instrumentation/gps/indicated-ground-speed-kt";
-                VarStruct varStruct14(sim, 0, false);
-                simToVariableMap["gps_indicated-ground-speed-kt"] = &varStruct14;
-                break;
-            }
-            case 15:{
-                // gps_indicated-vertical-speed
-                sim = "/instrumentation/gps/indicated-vertical-speed";
-                VarStruct varStruct15(sim, 0, false);
-                simToVariableMap["gps_indicated-vertical-speed"] = &varStruct15;
-                break;
-            }
-            case 16:{
-                // indicated-heading-deg
-                sim = "/instrumentation/heading-indicator/indicated-heading-deg";
-                VarStruct varStruct16(sim, 0, false);
-                simToVariableMap["indicated-heading-deg"] = &varStruct16;
-                break;
-            }
-            case 17:{
-                // magnetic-compass_indicated-heading-deg
-                sim = "/instrumentation/magnetic-compass/indicated-heading-deg";
-                VarStruct varStruct17(sim, 0, false);
-                simToVariableMap["magnetic-compass_indicated-heading-deg"] = &varStruct17;
-                break;
-            }
-            case 18:{
-                // slip-skid-ball_indicated-slip-skid
-                sim = "/instrumentation/slip-skid-ball/indicated-slip-skid";
-                VarStruct varStruct18(sim, 0, false);
-                simToVariableMap["slip-skid-ball_indicated-slip-skid"] = &varStruct18;
-                break;
-            }
-            case 19:{
-                // turn-indicator_indicated-turn-rate
-                sim = "/instrumentation/turn-indicator/indicated-turn-rate";
-                VarStruct varStruct19(sim, 0, false);
-                simToVariableMap["turn-indicator_indicated-turn-rate"] = &varStruct19;
-                break;
-            }
-            case 20:{
-                // vertical-speed-indicator_indicated-speed-fpm
-                sim = "/instrumentation/vertical-speed-indicator/indicated-speed-fpm";
-                VarStruct varStruct20(sim, 0, false);
-                simToVariableMap["vertical-speed-indicator_indicated-speed-fpm"] = &varStruct20;
-                break;
-            }
-            case 21:{
-                // flight_aileron
-                sim = "/controls/flight/aileron";
-                VarStruct varStruct21(sim, 0, false);
-                simToVariableMap["flight_aileron"] = &varStruct21;
-                break;
-            }
-            case 22:{
-                // flight_elevator
-                sim = "/controls/flight/elevator";
-                VarStruct varStruct22(sim, 0, false);
-                simToVariableMap["flight_elevator"] = &varStruct22;
-                break;
-            }
-            case 23:{
-                // flight_rudder
-                sim = "/controls/flight/rudder";
-                VarStruct varStruct23(sim, 0, false);
-                simToVariableMap["flight_rudder"] = &varStruct23;
-                break;
-            }
-            case 24:{
-                // flight_flaps
-                sim = "/controls/flight/flaps";
-                VarStruct varStruct24(sim, 0, false);
-                simToVariableMap["flight_flaps"] = &varStruct24;
-                break;
-            }
-            case 25:{
-                // engine_throttle
-                sim = "/controls/engines/engine/throttle";
-                VarStruct varStruct25(sim, 0, false);
-                simToVariableMap["engine_throttle"] = &varStruct25;
-                break;
-            }
-            case 26:{
-                // current-engine_throttle
-                sim = "/controls/engines/current-engine/throttle";
-                VarStruct varStruct26(sim, 0, false);
-                simToVariableMap["current-engine_throttle"] = &varStruct26;
-                break;
-            }
-            case 27:{
-                // switches_master-avionics
-                sim = "/controls/switches/master-avionics";
-                VarStruct varStruct27(sim, 0, false);
-                simToVariableMap["switches_master-avionics"] = &varStruct27;
-                break;
-            }
-            case 28:{
-                // switches_starter
-                sim = "/controls/switches/starter";
-                VarStruct varStruct28(sim, 0, false);
-                simToVariableMap["switches_startert"] = &varStruct28;
-                break;
-            }
-            case 29:{
-                // active-engine_auto-start
-                sim = "/engines/active-engine/auto-start";
-                VarStruct varStruct29(sim, 0, false);
-                simToVariableMap["active-engine_auto-start"] = &varStruct29;
-                break;
-            }
-            case 30:{
-                // flight_speedbrake
-                sim = "/controls/flight/speedbrake";
-                VarStruct varStruct30(sim, 0, false);
-                simToVariableMap["flight_speedbrake"] = &varStruct30;
-                break;
-            }
-            case 31:{
-                // c172p_brake-parking
-                sim = "/sim/model/c172p/brake-parking";
-                VarStruct varStruct31(sim, 0, false);
-                simToVariableMap["c172p_brake-parking"] = &varStruct31;
-                break;
-            }
-            case 32:{
-                // engine_primer
-                sim = "/controls/engines/engine/primer";
-                VarStruct varStruct32(sim, 0, false);
-                simToVariableMap["engine_primer"] = &varStruct32;
-                break;
-            }
-            case 33:{
-                // current-engine_mixture
-                sim = "/controls/engines/current-engine/mixture";
-                VarStruct varStruct33(sim, 0, false);
-                simToVariableMap["current-engine_mixture"] = &varStruct33;
-                break;
-            }
-            case 34:{
-                // switches_master-bat
-                sim = "/controls/switches/master-bat";
-                VarStruct varStruct34(sim, 0, false);
-                simToVariableMap["switches_master-bat"] = &varStruct34;
-                break;
-            }
-            case 35:{
-                // switches_master-alt
-                sim = "/controls/switches/master-alt";
-                VarStruct varStruct35(sim, 0, false);
-                simToVariableMap["switches_master-altt"] = &varStruct35;
-            }
-                break;
-            case 36:{
-                // engine_rpm
-                sim = "/engines/engine/rpm";
-                VarStruct varStruct36(sim, 0, false);
-                simToVariableMap["engine_rpmt"] = &varStruct36;
-                break;
-            }
-            default:
-                break;
-        }
-    }
-}
-
 ReadingData* ReadingData::getInstance()
 {
     if (instance == 0)
@@ -282,7 +18,44 @@ ReadingData* ReadingData::getInstance()
 }
 
 ReadingData::ReadingData()
-{}
+{
+    nameToIndexMap["instrumentation/airspeed-indicator/indicated-speed-kt"] = 1;
+    nameToIndexMap["sim/time/warp"] = 2;
+    nameToIndexMap["controls/switches/magneto"] = 3;
+    nameToIndexMap["instrumentation/heading-indicator/offset-deg"] = 4;
+    nameToIndexMap["instrumentation/altimeter/indicated-altitude-ft"] = 5;
+    nameToIndexMap["instrumentation/altimeter/pressure-alt-ft"] = 6;
+    nameToIndexMap["instrumentation/attitude-indicator/indicated-pitch-deg"] = 7;
+    nameToIndexMap["instrumentation/attitude-indicator/indicated-roll-deg"] = 8;
+    nameToIndexMap["instrumentation/attitude-indicator/internal-pitch-deg"] = 9;
+    nameToIndexMap["instrumentation/attitude-indicator/internal-roll-deg"] = 10;
+    nameToIndexMap["instrumentation/encoder/indicated-altitude-ft"] = 11;
+    nameToIndexMap["instrumentation/encoder/pressure-alt-ft"] = 12;
+    nameToIndexMap["instrumentation/gps/indicated-altitude-ft"] = 13;
+    nameToIndexMap["instrumentation/gps/indicated-ground-speed-kt"] = 14;
+    nameToIndexMap["instrumentation/gps/indicated-vertical-speed"] = 15;
+    nameToIndexMap["instrumentation/heading-indicator/indicated-heading-deg"] = 16;
+    nameToIndexMap["instrumentation/magnetic-compass/indicated-heading-deg"] = 17;
+    nameToIndexMap["instrumentation/slip-skid-ball/indicated-slip-skid"] = 18;
+    nameToIndexMap["instrumentation/turn-indicator/indicated-turn-rate"] = 19;
+    nameToIndexMap["instrumentation/vertical-speed-indicator/indicated-speed-fpm"] = 20;
+    nameToIndexMap["controls/flight/aileron"] = 21;
+    nameToIndexMap["controls/flight/elevator"] = 22;
+    nameToIndexMap["controls/flight/rudder"] = 23;
+    nameToIndexMap["controls/flight/flaps"] = 24;
+    nameToIndexMap["controls/engines/engine/throttle"] = 25;
+    nameToIndexMap["controls/engines/current-engine/throttle"] = 26;
+    nameToIndexMap["controls/switches/master-avionics"] = 27;
+    nameToIndexMap["controls/switches/starter"] = 28;
+    nameToIndexMap["engines/active-engine/auto-start"] = 29;
+    nameToIndexMap["controls/flight/speedbrake"] =  30;
+    nameToIndexMap["sim/model/c172p/brake-parking"] = 31;
+    nameToIndexMap["controls/engines/engine/primer"] = 32;
+    nameToIndexMap["controls/engines/current-engine/mixture"] = 33;
+    nameToIndexMap["controls/switches/master-bat"] = 34;
+    nameToIndexMap["controls/switches/master-alt"] = 35;
+    nameToIndexMap["engines/engine/rpm"] = 36;
+}
 
 
 vector<string> ReadingData::getWordsVector()
@@ -336,4 +109,51 @@ void ReadingData::setShouldRun(bool b) {
 
 bool ReadingData::getShouldRun() {
     return instance->should_run;
+}
+
+void ReadingData::addToNameMap(string name, VarStruct* varStruct) {
+    nameToVariableMap[name] = varStruct;
+}
+
+void ReadingData::addToSimMap(string name, VarStruct* varStruct) {
+    simToVariableMap[name] = varStruct;
+}
+
+//int ReadingData::findInNameMap(const string& name) {
+//    if (nameToVariableMap.find(name) != nameToVariableMap.end()) {
+//        return 1;
+//    }
+//    return 0;
+//}
+//int ReadingData::findInSimMap(const string& name) {
+//    if (simToVariableMap.find(name) != simToVariableMap.end()) {
+//        return 1;
+//    }
+//    return 0;
+//}
+//void ReadingData::updateInNameMap(const string& name, double val) {
+//    nameToVariableMap.find(name)->second->setVal(val);
+//}
+//
+//void ReadingData::updateInSimMap(const string& name, double val) {
+//    simToVariableMap.find(name)->second->setVal(val);
+//}
+
+/**
+ * This method gets a vector of double type values as input
+ * and by iterating over the simulator to variable map, for every element in
+ * the map, i.e. <key, value> pair, it gets its relevant simulator path name,
+ * represented as sim, then it gets the appropriate index it has in the values
+ * sent by the simulator, and with the help of the indexMap that was initialized with
+ * a pair of <key, value> pairs where the key is the sim path and the value is its
+ * appropriate index, the method will set the appropriate value in the sim to var map.
+ * */
+void ReadingData::updateFromSimulator (vector<double> vector) {
+    int index;
+    string sim;
+    for (auto& element: simToVariableMap) {
+        sim = element.second->getSim();
+        index = indexMap.find(sim)->second;
+        element.second->setVal(vector.at(index));
+    }
 }
