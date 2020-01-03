@@ -72,7 +72,7 @@ public:
 
     void updateFromSimulator(vector<double>);
 
-}
+};
 
 
 #endif //EX3_READINGDATA_H
