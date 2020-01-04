@@ -1,5 +1,5 @@
 /**
- * This class is in charge of openenig a server and processing the info received
+ * This class is in charge of opening a server and processing the info received
  * by the client.
  * */
 #include <thread>
@@ -90,8 +90,8 @@ void openDataServer::openServer(int port) {
 
     // while the singleton instance says its ok to run this loop will run
     while (ReadingData::getInstance()->getShouldRun()) {
-        locker.lock();
         valread  = read( client_socket , buffer, 1024);
+        locker.lock();
         // information received from the simulator to be processed
         processInfo(buffer);
         locker.unlock();
@@ -118,160 +118,3 @@ int openDataServer::execute() {
     }
     return 0;
 }
-
-//    for (; buffer[i] != back_slash_n; i++) {
-//
-//        // next location in input
-//        val_num++;
-//        // switch case sets the inputted value received with the help of the val_num
-//        switch (val_num) {
-//            case 1:
-//                // airspeed-indicator_indicated-speed-kt
-//                readingData->findInMap("airspeed-indicator_indicated-speed-kt", stod(str_value));
-//                break;
-//            case 2:
-//                // time_warp
-//                readingData->findInMap("time_warp", stod(str_value));
-//                break;
-//            case 3:
-//                // switches_magnetos
-//                readingData->findInMap("switches_magnetos", stod(str_value));
-//                break;
-//            case 4:
-//                // heading-indicator_offset-deg
-//                readingData->findInMap("heading-indicator_offset-deg", stod(str_value));
-//                break;
-//            case 5:
-//                // altimeter_indicated-altitude-ft
-//                readingData->findInMap("altimeter_indicated-altitude-ft", stod(str_value));
-//                break;
-//            case 6:
-//                // altimeter_pressure-alt-ft
-//                sim = "/instrumentation/altimeter/pressure-alt-ft";
-//                readingData->findInMap("altimeter_pressure-alt-ft", stod(str_value));
-//                break;
-//            case 7:
-//                // attitude-indicator_indicated-pitch-deg
-//                readingData->findInMap("attitude-indicator_indicated-pitch-deg", stod(str_value));
-//
-//                break;
-//            case 8:
-//                // attitude-indicator_indicated-roll-deg
-//                readingData->findInMap("attitude-indicator_indicated-roll-deg", stod(str_value));
-//                break;
-//            case 9:
-//                // attitude-indicator_internal-pitch-deg
-//                readingData->findInMap("attitude-indicator_internal-pitch-deg", stod(str_value));
-//                break;
-//            case 10:
-//                // attitude-indicator_internal-roll-deg
-//                readingData->findInMap("attitude-indicator_internal-roll-deg", stod(str_value));
-//                break;
-//            case 11:
-//                // encoder_indicated-altitude-ft
-//                readingData->findInMap("encoder_indicated-altitude-ft", stod(str_value));
-//                break;
-//            case 12:
-//                // encoder_pressure-alt-ft
-//                readingData->findInMap("encoder_pressure-alt-ft", stod(str_value));
-//                break;
-//            case 13:
-//                // gps_indicated-altitude-ft
-//                readingData->findInMap("gps_indicated-altitude-ft", stod(str_value));
-//                break;
-//            case 14:
-//                // gps_indicated-ground-speed-kt
-//                readingData->findInMap("gps_indicated-ground-speed-kt", stod(str_value));
-//                break;
-//            case 15:
-//                // gps_indicated-vertical-speed
-//                readingData->findInMap("gps_indicated-vertical-speed", stod(str_value));
-//                break;
-//            case 16:
-//                // indicated-heading-deg
-//                readingData->findInMap("indicated-heading-deg", stod(str_value));
-//                break;
-//            case 17:
-//                // magnetic-compass_indicated-heading-deg
-//                readingData->findInMap("magnetic-compass_indicated-heading-deg", stod(str_value));
-//                break;
-//            case 18:
-//                // slip-skid-ball_indicated-slip-skid
-//                readingData->findInMap("slip-skid-ball_indicated-slip-skid", stod(str_value));
-//                break;
-//            case 19:
-//                // turn-indicator_indicated-turn-rate
-//                readingData->findInMap("turn-indicator_indicated-turn-rate", stod(str_value));
-//                break;
-//            case 20:
-//                // vertical-speed-indicator_indicated-speed-fpm
-//                readingData->findInMap("vertical-speed-indicator_indicated-speed-fpm", stod(str_value));
-//                break;
-//            case 21:
-//                // flight_aileron
-//                readingData->findInMap("flight_aileron", stod(str_value));
-//                break;
-//            case 22:
-//                // flight_elevator
-//                readingData->findInMap("flight_elevator", stod(str_value));
-//                break;
-//            case 23:
-//                // flight_rudder
-//                readingData->findInMap("flight_rudder", stod(str_value));
-//                break;
-//            case 24:
-//                // flight_flaps
-//                readingData->findInMap("flight_flaps", stod(str_value));
-//                break;
-//            case 25:
-//                // engine_throttle
-//                readingData->findInMap("engine_throttle", stod(str_value));
-//                break;
-//            case 26:
-//                // current-engine_throttle
-//                readingData->findInMap("current-engine_throttle", stod(str_value));
-//                break;
-//            case 27:
-//                // switches_master-avionics
-//                readingData->findInMap("switches_master-avionics", stod(str_value));
-//                break;
-//            case 28:
-//                // switches_starter
-//                readingData->findInMap("switches_starter", stod(str_value));
-//                break;
-//            case 29:
-//                // active-engine_auto-start
-//                readingData->findInMap("active-engine_auto-start", stod(str_value));
-//                break;
-//            case 30:
-//                // flight_speedbrake
-//                readingData->findInMap("flight_speedbrake", stod(str_value));
-//            case 31:
-//                // c172p_brake-parking
-//                readingData->findInMap("c172p_brake-parking", stod(str_value));
-//                break;
-//            case 32:
-//                // engine_primer
-//                readingData->findInMap("engine_primer", stod(str_value));
-//                break;
-//            case 33:
-//                // current-engine_mixture
-//                readingData->findInMap("current-engine_mixture", stod(str_value));
-//                break;
-//            case 34:
-//                // switches_master-bat
-//                readingData->findInMap("switches_master-bat", stod(str_value));
-//                break;
-//            case 35:
-//                // switches_master-alt
-//                readingData->findInMap("switches_master-alt", stod(str_value));
-//                break;
-//            case 36:
-//                // engine_rpm
-//                readingData->findInMap("engine_rpm", stod(str_value));
-//                break;
-//            default:
-//                break;
-//        }
-//        str_value = "";
-//    }

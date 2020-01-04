@@ -7,20 +7,12 @@ void VarStruct::setVal(double new_val) {
     this->val = new_val;
 }
 
-void VarStruct::setNeedToChangeSim(bool needToChangeSim) {
-    VarStruct::needToChangeSim = needToChangeSim;
-}
-
-void VarStruct::setSim(const string &sim) {
-    VarStruct::sim = sim;
+void VarStruct::setSim(const string &_sim) {
+    VarStruct::sim = _sim;
 }
 
 const string &VarStruct::getSim() const {
     return sim;
-}
-
-bool VarStruct::isNeedToChangeSim() const {
-    return needToChangeSim;
 }
 
 double VarStruct::getVal() {

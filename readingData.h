@@ -7,6 +7,7 @@
 
 #include "varStruct.h"
 #include "command.h"
+#include <unordered_map>
 
 using namespace std;
 
@@ -38,15 +39,17 @@ private:
 
     unordered_map<string, int> nameToIndexMap;
 
+    vector<string> messages;
+
 public:
 /* Static access method. */
     static ReadingData *getInstance();
 
-    unordered_map<string, VarStruct *> getNameToVariableMap();
+    unordered_map<string, VarStruct *>* getNameToVariableMap();
 
-    unordered_map<string, VarStruct *> getSimToVariableMap();
+    unordered_map<string, VarStruct *>* getSimToVariableMap();
 
-    vector<string> getWordsVector();
+    vector<string>* getWordsVector();
 
     void setWords(vector<string> v);
 
@@ -61,17 +64,20 @@ public:
     void addToNameMap(string, VarStruct *);
 
     void addToSimMap(string, VarStruct *);
-//
-//    int findInNameMap(const string&);
-//
-//    int findInSimMap(const string&);
-//
-//    void updateInNameMap(const string&, double);
-//
-//    void updateInSimMap(const string&, double);
+
+    int findInNameMap(const string&);
+
+    int findInSimMap(const string&);
+
+    void updateInNameMap(const string&, double);
+
+    void updateInSimMap(const string&, double);
 
     void updateFromSimulator(vector<double>);
 
+    void addToMessages(string);
+
+    vector<string>* getMessages();
 };
 
 

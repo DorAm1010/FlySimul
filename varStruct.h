@@ -10,18 +10,13 @@ using namespace std;
 
 class VarStruct {
     double val;
-    bool needToChangeSim;
     string sim;
 public:
-    void setNeedToChangeSim(bool needToChangeSim);
-
     void setSim(const string &sim);
 
     const string &getSim() const;
 
     void setVal(double new_val);
-
-    bool isNeedToChangeSim() const;
 
     double getVal();
 };

@@ -58,34 +58,34 @@ ReadingData::ReadingData()
 }
 
 
-vector<string> ReadingData::getWordsVector()
+vector<string>* ReadingData::getWordsVector()
 {
     if (instance == 0)
     {
         instance = new ReadingData();
     }
 
-    return instance->words;
+    return &instance->words;
 }
 
-unordered_map<string,VarStruct*> ReadingData::getNameToVariableMap()
+unordered_map<string,VarStruct*>* ReadingData::getNameToVariableMap()
 {
     if (instance == 0)
     {
         instance = new ReadingData();
     }
 
-    return instance->nameToVariableMap;
+    return &instance->nameToVariableMap;
 }
 
-unordered_map<string,VarStruct*> ReadingData::getSimToVariableMap()
+unordered_map<string,VarStruct*>* ReadingData::getSimToVariableMap()
 {
     if (instance == 0)
     {
         instance = new ReadingData();
     }
 
-    return instance->simToVariableMap;
+    return &instance->simToVariableMap;
 }
 
 void ReadingData::setWords(vector<string> v)
@@ -119,25 +119,25 @@ void ReadingData::addToSimMap(string name, VarStruct* varStruct) {
     simToVariableMap[name] = varStruct;
 }
 
-//int ReadingData::findInNameMap(const string& name) {
-//    if (nameToVariableMap.find(name) != nameToVariableMap.end()) {
-//        return 1;
-//    }
-//    return 0;
-//}
-//int ReadingData::findInSimMap(const string& name) {
-//    if (simToVariableMap.find(name) != simToVariableMap.end()) {
-//        return 1;
-//    }
-//    return 0;
-//}
-//void ReadingData::updateInNameMap(const string& name, double val) {
-//    nameToVariableMap.find(name)->second->setVal(val);
-//}
-//
-//void ReadingData::updateInSimMap(const string& name, double val) {
-//    simToVariableMap.find(name)->second->setVal(val);
-//}
+int ReadingData::findInNameMap(const string& name) {
+    if (nameToVariableMap.find(name) != nameToVariableMap.end()) {
+        return 1;
+    }
+    return 0;
+}
+int ReadingData::findInSimMap(const string& name) {
+    if (simToVariableMap.find(name) != simToVariableMap.end()) {
+        return 1;
+    }
+    return 0;
+}
+void ReadingData::updateInNameMap(const string& name, double val) {
+    nameToVariableMap.find(name)->second->setVal(val);
+}
+
+void ReadingData::updateInSimMap(const string& name, double val) {
+    simToVariableMap.find(name)->second->setVal(val);
+}
 
 /**
  * This method gets a vector of double type values as input
@@ -156,4 +156,12 @@ void ReadingData::updateFromSimulator (vector<double> vector) {
         index = indexMap.find(sim)->second;
         element.second->setVal(vector.at(index));
     }
+}
+
+vector<string>* ReadingData::getMessages() {
+    return &instance->messages;
+}
+
+void ReadingData::addToMessages(string message) {
+    messages.push_back(message);
 }

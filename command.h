@@ -8,9 +8,7 @@
 
 #include <string>
 #include <vector>
-#include <unordered_map>
-#include <map>
-#include "mutex"
+#include <mutex>
 #include "Expression.h"
 
 using namespace std;
@@ -20,7 +18,7 @@ using namespace std;
  */
 class Command {
 public:
-    virtual void execute()=0;
+    virtual int execute()=0;
 };
 
 /**
@@ -31,62 +29,66 @@ protected:
     double evaluate(string expString);
 };
 
-/**
- * handling open and run data server that will communicate with the fly simulator.
- */
 class OpenDataServer : public Command {
     void processInfo(char* );
     void openServer(int );
 public:
-    void execute();
+    int execute();
 };
 
 /**
  * handling connecting to fly simulator as a client and send to it instruction.
  */
 class ConnectControlClient : public Command {
-    void messageSim();
+    void messageSim(int);
 public:
-    void execute();
+    int execute();
 };
-
-/**
- * command that handles a definition of a new variable.
- */
-class DefineVarCommand : public EvaluateCommand {
-public:
-    void execute();
-};
-
-/**
- * command that handles printing.
- */
-class PrintCommand : public EvaluateCommand {
-public:
-    void execute();
-};
-
 
 /**
  * assigning new value to a existing variable.
  */
 class AssignValueCommand: public EvaluateCommand {
+    double evaluate(string);
 public:
-    void execute();
+    int execute();
 };
 
-class WhileCommand: public EvaluateCommand {
+class DefineVarCommand : public EvaluateCommand {
+    double evaluate(string);
+
 public:
-    void execute();
+    int execute();
 };
 
-class IfCommand: public EvaluateCommand {
+class PrintCommand : public EvaluateCommand {
+    double evaluate(string);
+
 public:
-    void execute();
+    int execute();
 };
 
-class SleepCommand: public EvaluateCommand {
+class SleepCommand : public EvaluateCommand {
+    double evaluate(string);
+
 public:
-    void execute();
+    int execute();
+};
+
+class IfCommand : public EvaluateCommand {
+    bool condition;
+    bool verify();
+    double evaluate(string);
+
+public:
+    int execute();
+};
+
+class WhileCommand : public EvaluateCommand {
+    double evaluate(string);
+
+public:
+    IfCommand ifCommand;
+    int execute();
 };
 #endif //FLYSIM_COMMAND_H
