@@ -10,12 +10,13 @@
 using namespace std;
 
 class Parser{
-    void initCommandsMap();
-public:
+private:
     int index;
+    ReadingData* readingData;
     unordered_map<string, Command*> cmdMap;
     vector<string> words;
+public:
     void Pars();
-    Parser(vector<string>& v);
+    Parser();
 };
 #endif //EX3_PARSER_H

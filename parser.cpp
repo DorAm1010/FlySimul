@@ -5,39 +5,44 @@
 #include "readingData.h"
 /* Somewhere here setShouldRun to true, set to false when done*/
 
-Parser::Parser(vector<string> &v) {
-    this->words = v;
-    this->index = 0;
+Parser::Parser() {
+    readingData = ReadingData::getInstance();
+    this->words = readingData->getWordsVector();
+    this->index = readingData->getInd();
+
+    DefineVarCommand* define;
+    PrintCommand* print;
+    AssignValueCommand* assign;
+    OpenDataServer* server;
+    ConnectControlClient* client;
+    SleepCommand* sleep;
+    WhileCommand* whle;
+    IfCommand* iff;
+
+    cmdMap.insert({"var", define});
+    cmdMap.insert({"Print", print});
+    cmdMap.insert({"assign", assign});
+    cmdMap.insert({"OpenDataServer", server});
+    cmdMap.insert({"ConnectControlClient", client});
+    cmdMap.insert({"Sleep", sleep});
+    cmdMap.insert({"While", whle});
+    cmdMap.insert({"If", iff});
 }
 
-void Parser::initCommandsMap() {
-    size_t i = 0;
-    ReadingData* readingData = ReadingData::getInstance();
-    while (i < words.size()) {
-        if (words.at(i) == "openDataServer") {
-            openDataServer openDataServer;
-            Command* c = &openDataServer;
-            cmdMap["openDataServer"] = c;
-            i++;
-        } else if (words.at(i) == "connectControlClient") {
-            connectControlClient connectControlClient;
-            Command* c1 = &connectControlClient;
-            cmdMap["connectControlClient"] = c1;
-            i++;
-        } else if (words.at(i) == "var") {
-            i++;
-            if(words.at(i) == "->"){
-                i++;
-                readingData->getNameToVariableMap()[words.at(i)] = VarStruct()
-            }// insert to program to simulator wrap map
-
-        }
-    }
-}
 
 void Parser::Pars() {
-    initCommandsMap();
+    Command* c;
     while (index < words.size()) {
-        Command c = map.get(this->words.at(this->index));
+        if(this->readingData->findInNameMap(words.at(index)) == 1) {
+            c = cmdMap.find("assign")->second;
+        } else {
+            c = cmdMap.find(this->words.at(this->index))->second;
+
+            if(c == NULL) {
+
+            }
+        }
+
+        c->execute();
     }
 }
