@@ -1,11 +1,14 @@
 #include <string>
 #include <iostream>
 #include <stack>
-#include <queue> 
+#include <queue>
 #include <regex>
 #include <vector>
-#include "ex1.h"
 
+
+//#include "Expression.h"
+//#include "Interpreter.h"
+#include "ex1.h"
 using namespace std;
 
 Interpreter::Interpreter() {
@@ -20,7 +23,7 @@ Expression* Interpreter::interpret(string exString) {
 	queue <string> outputQueue;
 
 	int ind;
-	string reg = "a"; //(a-zA-Z)+_?(a-zA-Z0-9)";
+	string reg = "(a-zA-Z)+_?(a-zA-Z0-9)";
     regex variableReg(reg);  //[a-zA-Z]+_?[a-zA-Z0-9]*/g");
 //	regex numberReg("-?0|([1-9])"); //[0-9]*)(\\.[0-9]+)?");
 
@@ -75,7 +78,7 @@ Expression* Interpreter::interpret(string exString) {
 				}
 
 				try {
-					if(operatorPre(string(1,exString[ind + 1]))) {
+					if(operatorPre(string(1,exString[ind + 1])) == 1) {
 						throw("tow operators in a row is not valid");
 					}
 				} catch (const char* e) {
@@ -102,7 +105,7 @@ Expression* Interpreter::interpret(string exString) {
 
 				if(pre == 2) {
 
-					if(ind == 0 || exString[ind  - 1] == '(') {//isdigit(exString[ind - 1])) {
+					if(ind == 0 || exString[ind  - 1] == '(' || exString[ind  - 1] == '/' || exString[ind  - 1] == '*') {//isdigit(exString[ind - 1])) {
 						if(exString[ind] == '+') {
 							operatorStack.push("^");
 						} else {
@@ -161,11 +164,11 @@ Expression* Interpreter::interpret(string exString) {
 				int endInd = ind;
 
 				//checks where the number ends.
-				while(endInd < exString.length() && (regex_match( exString.substr(ind, endInd - ind +1), variableReg))) {
+				while(endInd < exString.length() && (isalpha(exString[endInd]) || isdigit(exString[endInd]) || exString[endInd] == '_')) {
 					endInd++;
 				}
 
-				string hopefullyVariable = exString.substr(ind, endInd - ind + 1);
+				string hopefullyVariable = exString.substr(ind, endInd - ind);
 				outputQueue.push(hopefullyVariable);
 				//check if is valid variable
 				//if(regex_match(hopefullyNumber, numberReg)) {
@@ -174,7 +177,7 @@ Expression* Interpreter::interpret(string exString) {
 				//	throw (hopefullyNumber + "is not a valid number");
 				//}
 
-				ind = endInd ;
+				ind = endInd - 1;
 			}
 
 		}
@@ -234,17 +237,16 @@ Expression* Interpreter::interpret(string exString) {
 
         if (pre == 0) {
 
-            Expression *newEx;
 
 
             if (isdigit(top[0])) {
-                newEx = new Value(stod(top));
+                finalEx = new Value(stod(top));
             } else {
                 itr = find(variableVec->begin(), variableVec->end(), top);
-                newEx = new Variable(top, valuesVec->at(distance(variableVec->begin(), itr)));
+                finalEx = new Variable(top, valuesVec->at(distance(variableVec->begin(), itr)));
             }
 
-            s.push(newEx);
+            s.push(finalEx);
             q.pop();
 
 
@@ -308,7 +310,7 @@ Expression* Interpreter::interpret(string exString) {
     vector<string>:: iterator it;
      double doubleVal;
 
- 	while(!done) {
+ 	while(!done && s != "") {
  		mid = s.find("=");
  		end = s.find(";");
  		if(end == -1) {
