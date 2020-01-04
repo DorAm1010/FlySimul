@@ -1,7 +1,6 @@
 //
 // Created by Laliv on 03/01/2020.
 //
-#include "command.h"
 #include "readingData.h"
 
 using namespace std;
@@ -17,7 +16,7 @@ void AssignValueCommand::execute() {
     rd->updateInNameMap(words[ind], newVal);
     VarStruct* s = rd->returnVarStruct(words[ind]);
     string massage = "set /" + s->getSim() + words[ind + 2] + "\r\n";
-    rd->addToMassages(massage);
+    rd->addToMessages(massage);
 
     rd->incInd(3);
 }
