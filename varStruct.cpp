@@ -22,3 +22,7 @@ const string &VarStruct::getSim() const {
 bool VarStruct::isNeedToChangeSim() const {
     return needToChangeSim;
 }
+
+double VarStruct::getVal() {
+    return val;
+}

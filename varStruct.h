@@ -22,6 +22,8 @@ public:
     void setVal(double new_val);
 
     bool isNeedToChangeSim() const;
+
+    double getVal();
 };
 
 #endif //EX3_VARSTRUCT_H
