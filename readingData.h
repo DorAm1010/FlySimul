@@ -39,6 +39,8 @@ private:
 
     unordered_map<string, int> nameToIndexMap;
 
+    unordered_map<string, VarStruct*> privateVarsMap;
+
     vector<string> messages;
 
 public:
@@ -65,11 +67,17 @@ public:
 
     void addToSimMap(string, VarStruct *);
 
+    void addToPrivateVarsMap(string, VarStruct *);
+
     int findInNameMap(const string&);
 
     int findInSimMap(const string&);
 
+    int findInPrivateVarsMap(const string& name);
+
     void updateInNameMap(const string&, double);
+
+    void updateInPrivateVarsMap(const string& name, double val);
 
     void updateInSimMap(const string&, double);
 
@@ -78,6 +86,8 @@ public:
     void addToMessages(string);
 
     vector<string>* getMessages();
+
+    VarStruct* returnVarStruct(string);
 };
 
 
