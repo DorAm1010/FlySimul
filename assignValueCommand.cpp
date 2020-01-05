@@ -1,8 +1,8 @@
 //
 // Created by Laliv on 03/01/2020.
 //
-#include "command.h"
 #include "readingData.h"
+#include "assignValue.h"
 
 using namespace std;
 

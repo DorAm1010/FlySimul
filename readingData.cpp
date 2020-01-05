@@ -4,6 +4,8 @@
 
 #include "readingData.h"
 
+using namespace std;
+
 /* Null, because instance will be initialized on demand. */
 ReadingData* ReadingData::instance = 0;
 
@@ -78,16 +80,6 @@ unordered_map<string,VarStruct*>* ReadingData::getNameToVariableMap()
     return &instance->nameToVariableMap;
 }
 
-unordered_map<string,VarStruct*>* ReadingData::getSimToVariableMap()
-{
-    if (instance == 0)
-    {
-        instance = new ReadingData();
-    }
-
-    return &instance->simToVariableMap;
-}
-
 void ReadingData::setWords(vector<string> v)
 {
     instance->words = v;
@@ -111,26 +103,20 @@ bool ReadingData::getShouldRun() {
     return instance->should_run;
 }
 
-void ReadingData::addToNameMap(string name, VarStruct* varStruct) {
+void ReadingData::addToNameMap(const string& name, VarStruct* varStruct) {
     nameToVariableMap[name] = varStruct;
 }
 
-void ReadingData::addToSimMap(string name, VarStruct* varStruct) {
+void ReadingData::addToSimMap(const string& name, VarStruct* varStruct) {
     simToVariableMap[name] = varStruct;
 }
 
-void ReadingData::addToPrivateVarsMap(string name, VarStruct* varStruct) {
+void ReadingData::addToPrivateVarsMap(const string& name, VarStruct* varStruct) {
     privateVarsMap[name] = varStruct;
 }
 
 int ReadingData::findInNameMap(const string& name) {
     if (nameToVariableMap.find(name) != nameToVariableMap.end()) {
-        return 1;
-    }
-    return 0;
-}
-int ReadingData::findInSimMap(const string& name) {
-    if (simToVariableMap.find(name) != simToVariableMap.end()) {
         return 1;
     }
     return 0;
@@ -149,10 +135,6 @@ void ReadingData::updateInPrivateVarsMap(const string& name, double val) {
     privateVarsMap.find(name)->second->setVal(val);
 }
 
-void ReadingData::updateInSimMap(const string& name, double val) {
-    simToVariableMap.find(name)->second->setVal(val);
-}
-
 /**
  * This method gets a vector of double type values as input
  * and by iterating over the simulator to variable map, for every element in
@@ -163,12 +145,13 @@ void ReadingData::updateInSimMap(const string& name, double val) {
  * appropriate index, the method will set the appropriate value in the sim to var map.
  * */
 void ReadingData::updateFromSimulator (vector<double> vector) {
-    int index;
+    int newVal;
     string sim;
+
     for (auto& element: simToVariableMap) {
         sim = element.second->getSim();
-        index = indexMap.find(sim)->second;
-        element.second->setVal(vector.at(index));
+        newVal = nameToIndexMap.find(sim)->second;
+        element.second->setVal(vector.at(newVal));
     }
 }
 
@@ -176,10 +159,14 @@ vector<string>* ReadingData::getMessages() {
     return &instance->messages;
 }
 
-void ReadingData::addToMessages(string message) {
+void ReadingData::addToMessages(const string& message) {
     messages.push_back(message);
 }
 
-VarStruct* ReadingData::returnVarStruct(string var) {
+VarStruct* ReadingData::returnVarStruct(const string& var) {
     return nameToVariableMap.find(var)->second;
+}
+
+std::unordered_map<std::string, VarStruct *> *ReadingData::getPrivateVarsMap() {
+    return &instance->privateVarsMap;
 }

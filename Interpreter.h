@@ -1,23 +1,19 @@
-#include <string>
-#include <queue> 
+#include <queue>
 #include <iostream>
 #include <map>
 #include <vector>
 #include "Expression.h"
-//#include "ex1.h"
-
-using namespace std;
 
 class Interpreter {
 
 private:
-	vector <double>* valuesVec;
-    vector <string>* variableVec;
-	int operatorPre(string c);
-	Expression* produceExpression(queue <string> q);
+    std::vector <double>* valuesVec;
+    std::vector <std::string>* variableVec;
+    int operatorPre(std::string c);
+    Expression* produceExpression(std::queue <std::string> q);
 public :
-	Interpreter();
-	Expression* interpret(string exString);
-	void setVariables(string s);
-	virtual ~Interpreter();
+    Interpreter();
+    Expression* interpret(std::string exString);
+    void setVariables(std::string s);
+    virtual ~Interpreter();
 };

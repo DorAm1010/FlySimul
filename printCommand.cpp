@@ -3,7 +3,8 @@
 //
 #include <iostream>
 #include "readingData.h"
-// #include "ex1.cpp"
+#include "printCommand.h"
+using namespace std;
 /**
  * Print command prints whatever message or value the user had inputted
  * in the argument.
@@ -20,7 +21,8 @@ int PrintCommand::execute() {
         cout << print.substr(1, print.length() - 2) << endl;
     } else {
         // otherwise it is an expression and needs to be interpreted
-        // expression = evaluate(print);
+        expression = evaluate(print);
+        cout << expression << endl;
     }
     readingData->incInd(1);
 }

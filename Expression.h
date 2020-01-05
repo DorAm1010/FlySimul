@@ -1,8 +1,7 @@
 
-#ifndef PROJECT_EXPRESSION_H
-#define PROJECT_EXPRESSION_H
+#ifndef FLYSIMUL_EXPRESSION_H
+#define FLYSIMUL_EXPRESSION_H
 
-using namespace std;
 /**
  * Expression Interface
  */

@@ -1,15 +1,14 @@
 /**
  * Lexer header.
  * */
-#ifndef FLYSIM_COMMAND_H
-#define FLYSIM_COMMAND_H
+#ifndef FLYSIMUL_COMMAND_H
+#define FLYSIMUL_COMMAND_H
 
 #include <string>
 #include <vector>
-using namespace std;
 
 class Lexer{
 public:
-    vector<string> lex(const string fileName);
+    std::vector<std::string> lex(std::string fileName);
 };
 #endif // FlySimul lexer.h

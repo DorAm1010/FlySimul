@@ -1,13 +1,6 @@
 #include <string>
-#include <iostream>
 #include <stack>
-#include <queue>
 #include <regex>
-#include <vector>
-
-
-//#include "Expression.h"
-//#include "Interpreter.h"
 #include "ex1.h"
 using namespace std;
 
@@ -26,71 +19,71 @@ Interpreter::Interpreter() {
  **/
 Expression* Interpreter::interpret(string exString) {
 
-	stack <string> operatorStack;
-	queue <string> outputQueue;
+    stack <string> operatorStack;
+    queue <string> outputQueue;
 
-	int ind;
-	string reg = "(a-zA-Z)+_?(a-zA-Z0-9)";
+    int ind;
+    string reg = "(a-zA-Z)+_?(a-zA-Z0-9)";
     regex variableReg(reg);  //[a-zA-Z]+_?[a-zA-Z0-9]*/g");
 //	regex numberReg("-?0|([1-9])"); //[0-9]*)(\\.[0-9]+)?");
 
 
-	for(ind = 0; ind < exString.length(); ind++) {
+    for(ind = 0; ind < exString.length(); ind++) {
 
-		//number
-		if(isdigit(exString[ind])) {
+        //number
+        if(isdigit(exString[ind])) {
 
-			int endInd = ind;
+            int endInd = ind;
 
-			//checks where the number ends.
-			while(endInd < exString.length() && (isdigit(exString[endInd]) || exString[endInd] == '.')) {
-				endInd++;
-			}
+            //checks where the number ends.
+            while(endInd < exString.length() && (isdigit(exString[endInd]) || exString[endInd] == '.')) {
+                endInd++;
+            }
 
-			string hopefullyNumber = exString.substr(ind, endInd - ind).c_str();
+            string hopefullyNumber = exString.substr(ind, endInd - ind).c_str();
 
-			//check if is valid number
-			//if(regex_search(hopefullyNumber, numberReg)) {
-				outputQueue.push(hopefullyNumber);
-			//} else {
-			//	try {
-			//		throw ( "invalid number");
-			//	} catch(const char* e) {
-			//		cout<< e << endl;
-			//	}
-			//}
+            //check if is valid number
+            //if(regex_search(hopefullyNumber, numberReg)) {
+            outputQueue.push(hopefullyNumber);
+            //} else {
+            //	try {
+            //		throw ( "invalid number");
+            //	} catch(const char* e) {
+            //		cout<< e << endl;
+            //	}
+            //}
 
-			ind = endInd - 1;
+            ind = endInd - 1;
 
-		}
+        }
 
-		else if(exString[ind] == '(') {
-			operatorStack.push("(");
-		}
+        else if(exString[ind] == '(') {
+            operatorStack.push("(");
+        }
 
-		else {
+        else {
 
-			int pre = operatorPre(string(1,exString[ind]));
+            int pre = operatorPre(string(1,exString[ind]));
 
-			if(pre > 0) {
+            if(pre > 0) {
 
-				try {
-					if(ind == exString.length()) {
-						throw("operator at the end of expression is not valid");
-					}
-				} catch (const char* e) {
-					throw e;
-				}
-
-				try {
-					if(operatorPre(string(1,exString[ind + 1])) == 1) {
-						throw("tow operators in a row is not valid");
-					}
-				} catch (const char* e) {
+                try {
+                    if(ind == exString.length()) {
+                        throw("operator at the end of expression is not valid");
+                    }
+                } catch (const char* e) {
                     throw e;
-				}
+                }
 
-				if(pre == 1) {
+                try {
+                    if(operatorPre(string(1,exString[ind + 1])) == 1) {
+                        throw("tow operators in a row is not valid");
+                    }
+                } catch (const char* e) {
+                    throw e;
+                }
+
+                if(pre == 1) {
 
                     if (!operatorStack.empty()) {
                         int preTop = operatorPre(operatorStack.top());
@@ -102,18 +95,18 @@ Expression* Interpreter::interpret(string exString) {
                     }
 
                     operatorStack.push(string(1,exString[ind]));
-				}
+                }
 
-				if(pre == 2) {
+                if(pre == 2) {
 
-					if(ind == 0 || exString[ind  - 1] == '(' || exString[ind  - 1] == '/' || exString[ind  - 1] == '*') {//isdigit(exString[ind - 1])) {
-						if(exString[ind] == '+') {
-							operatorStack.push("^");
-						} else {
-							operatorStack.push("~");
-						}
+                    if(ind == 0 || exString[ind  - 1] == '(' || exString[ind  - 1] == '/' || exString[ind  - 1] == '*') {//isdigit(exString[ind - 1])) {
+                        if(exString[ind] == '+') {
+                            operatorStack.push("^");
+                        } else {
+                            operatorStack.push("~");
+                        }
 
-					} else {
+                    } else {
 
                         //pop pre 1 from top of stack and push to queue,
                         // and push the operator into stack
@@ -131,61 +124,61 @@ Expression* Interpreter::interpret(string exString) {
                         } else {
                             operatorStack.push("-");
                         }
-					}
-				}
-			}
-		}
+                    }
+                }
+            }
+        }
 
-		if(exString[ind] == ')') {
+        if(exString[ind] == ')') {
 
-			//move operators from stack to queue, until theres an '('.
-			// then throw the '('
-			while(operatorStack.top() != "(") {
-				outputQueue.push(operatorStack.top());
-				operatorStack.pop();
-			}
+            //move operators from stack to queue, until theres an '('.
+            // then throw the '('
+            while(operatorStack.top() != "(") {
+                outputQueue.push(operatorStack.top());
+                operatorStack.pop();
+            }
 
-			try {
-				if(!operatorStack.empty()) {
-					operatorStack.pop();
-				} else {
-					throw("brackets in expression are not valid");
-				}
-			} catch (const char* e){
+            try {
+                if(!operatorStack.empty()) {
+                    operatorStack.pop();
+                } else {
+                    throw("brackets in expression are not valid");
+                }
+            } catch (const char* e){
                 throw e;
-			}
-		} else {
+            }
+        } else {
 
-			if(isalpha(exString[ind])) {
+            if(isalpha(exString[ind])) {
 
-				int endInd = ind;
+                int endInd = ind;
 
-				//checks where the number ends.
-				while(endInd < exString.length() && (isalpha(exString[endInd]) || isdigit(exString[endInd]) || exString[endInd] == '_')) {
-					endInd++;
-				}
+                //checks where the number ends.
+                while(endInd < exString.length() && (isalpha(exString[endInd]) || isdigit(exString[endInd]) || exString[endInd] == '_')) {
+                    endInd++;
+                }
 
-				string hopefullyVariable = exString.substr(ind, endInd - ind);
-				outputQueue.push(hopefullyVariable);
-				//check if is valid variable
-				//if(regex_match(hopefullyNumber, numberReg)) {
-					
-				//} else {
-				//	throw (hopefullyNumber + "is not a valid number");
-				//}
+                string hopefullyVariable = exString.substr(ind, endInd - ind);
+                outputQueue.push(hopefullyVariable);
+                //check if is valid variable
+                //if(regex_match(hopefullyNumber, numberReg)) {
 
-				ind = endInd - 1;
-			}
-		}
-	}
+                //} else {
+                //	throw (hopefullyNumber + "is not a valid number");
+                //}
 
-	// empty stack into the queue
-	while(!operatorStack.empty()) {
-		outputQueue.push(operatorStack.top());
-			operatorStack.pop();
-	}
+                ind = endInd - 1;
+            }
+        }
+    }
 
-	return produceExpression(outputQueue);
+    // empty stack into the queue
+    while(!operatorStack.empty()) {
+        outputQueue.push(operatorStack.top());
+        operatorStack.pop();
+    }
+
+    return produceExpression(outputQueue);
 }
 
 /**
@@ -193,43 +186,43 @@ Expression* Interpreter::interpret(string exString) {
  * @param c operator/character.
  * @return c's precedence.
  */
- int Interpreter::operatorPre(string c) {
+int Interpreter::operatorPre(string c) {
 
- 	if(c == "+" || c == "-") {
- 		return 2;
- 	}
+    if(c == "+" || c == "-") {
+        return 2;
+    }
 
- 	if(c == "*" || c == "/") {
- 		return 1;
- 	}
+    if(c == "*" || c == "/") {
+        return 1;
+    }
 
- 	if(c == "^" || c == "~") {
- 		return 3;
- 	}
+    if(c == "^" || c == "~") {
+        return 3;
+    }
 
- 	return 0;
- }
+    return 0;
+}
 
- /**
-  * produce an expression from a postfix queue.
-  * @param q postfix queue.
-  * @return expression.
-  */
- Expression* Interpreter::produceExpression(queue <string> q) {
- 	stack <Expression*> s;
- 	int pre;
- 	Expression* finalEx;
- 	Expression* ex1;
-     Expression* ex2;
- 	string top;
- 	string topOp;
- 	vector<string>::iterator itr;
+/**
+ * produce an expression from a postfix queue.
+ * @param q postfix queue.
+ * @return expression.
+ */
+Expression* Interpreter::produceExpression(queue <string> q) {
+    stack <Expression*> s;
+    int pre;
+    Expression* finalEx;
+    Expression* ex1;
+    Expression* ex2;
+    string top;
+    string topOp;
+    vector<string>::iterator itr;
 
-     pre = operatorPre(q.front());
+    pre = operatorPre(q.front());
 
-     bool first = true;
+    bool first = true;
 
- 	while(!q.empty()) {
+    while(!q.empty()) {
 
         top = q.front();
         pre = operatorPre(q.front());
@@ -281,71 +274,71 @@ Expression* Interpreter::interpret(string exString) {
                     finalEx = new Div(ex2, ex1);
             }
 
-                    s.push(finalEx);
+            s.push(finalEx);
 
 
             first = false;
         }
     }
 
- 	return finalEx;
+    return finalEx;
 
- }
+}
 
- /**
-  * set variables and their values, for future evaluations.
-  * @param s variables to set, in form - "var1=value1;var2=value2...".
-  */
- void Interpreter::setVariables(string s) {
- 	int end = 0;
- 	int mid = 0;
- 	string value = "";
+/**
+ * set variables and their values, for future evaluations.
+ * @param s variables to set, in form - "var1=value1;var2=value2...".
+ */
+void Interpreter::setVariables(string s) {
+    int end = 0;
+    int mid = 0;
+    string value = "";
     bool done = false;
     vector<string>:: iterator it;
-     double doubleVal;
+    double doubleVal;
 
- 	while(!done && s != "") {
- 		mid = s.find("=");
- 		end = s.find(";");
- 		if(end == -1) {
- 		    end = s.length();
- 		    done = true;
- 		}
- 		string key = s.substr(0,mid);
- 		value = s.substr(mid + 1, end - mid - 1);
- 		if(!done) {
+    while(!done && s != "") {
+        mid = s.find("=");
+        end = s.find(";");
+        if(end == -1) {
+            end = s.length();
+            done = true;
+        }
+        string key = s.substr(0,mid);
+        value = s.substr(mid + 1, end - mid - 1);
+        if(!done) {
             s = s.substr(end + 1, s.length() - end - 1);
         }
 
- 		try {
+        try {
             doubleVal = stod(value);
         } catch(invalid_argument e) {
- 		    throw ("variables is not defined well");
- 		}
- 		it = find(variableVec->begin(), variableVec->end(), key);
- 		int d = distance(variableVec->begin(), it);
- 		int size = variableVec->size() ;
+            throw ("variables is not defined well");
+        }
+        it = find(variableVec->begin(), variableVec->end(), key);
+        int d = distance(variableVec->begin(), it);
+        int size = variableVec->size() ;
         if(d == size) {
 
-           variableVec->push_back(key);
-           valuesVec->push_back(doubleVal);
-         } else {
+            variableVec->push_back(key);
+            valuesVec->push_back(doubleVal);
+        } else {
 
             variableVec->insert(variableVec->begin(), key);
             valuesVec->insert(valuesVec->begin(), doubleVal);
         }
- 		}
- }
-
-
- /**
-  * destructor.
-  */
- Interpreter::~Interpreter() {
-     if(variableVec != NULL) {
-       delete variableVec;
     }
-     if(valuesVec != NULL) {
-         delete valuesVec;
-     }
- }
+}
+
+
+/**
+ * destructor.
+ */
+Interpreter::~Interpreter() {
+    if(variableVec != NULL) {
+        delete variableVec;
+    }
+    if(valuesVec != NULL) {
+        delete valuesVec;
+    }
+}

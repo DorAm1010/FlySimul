@@ -2,7 +2,7 @@
 // Created by dor on 12/31/19.
 //
 #include "varStruct.h"
-
+using namespace std;
 void VarStruct::setVal(double new_val) {
     this->val = new_val;
 }

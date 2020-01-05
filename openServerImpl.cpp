@@ -2,15 +2,15 @@
  * This class is in charge of opening a server and processing the info received
  * by the client.
  * */
-#include <thread>
 #include <sys/socket.h>
 #include <iostream>
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "readingData.h"
-
-std::mutex locker;
+#include "openDataServer.h"
+#include <mutex>
+using namespace std;
 /**
  * the information received from the simulator, i.e. comma separated values,
  * are recieved line by line, and because the information will might not be received
@@ -20,7 +20,7 @@ std::mutex locker;
  * represent double type values that are inserted to a double type values vector.
  * That vector will be sent to be processed in updateFromSimulator.
  * */
-void openDataServer::processInfo(char* buffer) {
+void OpenDataServer::processInfo(char* buffer) {
     char delimiter = ',';
     char back_slash_n = '\n';
     // map value
@@ -55,7 +55,9 @@ void openDataServer::processInfo(char* buffer) {
  * This method is in charge of establishing a connection to the
  * simulator as a server
  * */
-void openDataServer::openServer(int port) {
+void OpenDataServer::openServer(int port) {
+
+    std::mutex locker;
 
     //create socket
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -104,17 +106,22 @@ void openDataServer::openServer(int port) {
  * in order to get the information regarding this class, i.e. the port number, then it opens up a
  * thread to connect as a server to the simulator.
  * */
-int openDataServer::execute() {
+int OpenDataServer::execute() {
     ReadingData* readingData = ReadingData::getInstance();
-    int port = stod(readingData->getWordsVector().at(readingData->getInd()));
+    readingData->incInd(1);
+    int port = stoi(readingData->getWordsVector()->at(readingData->getInd()));
     // skip port string to get next command when finished
-    readingData->incInd(2);
-    openDataServer openDataServer;
-    try {
-        std::thread t1(&openDataServer::openServer, &openDataServer, port);
-        t1.join();
-    } catch (const char* e) {
-        cout << e << endl;
-    }
+    readingData->incInd(1);
+    OpenDataServer openDataServer;
+    open_server_thread = std::thread(&OpenDataServer::openServer, &openDataServer, port);
+//    try {
+//        open_server_thread = std::thread(&OpenDataServer::openServer, &openDataServer, port);
+//    } catch (const char* e) {
+//        cout << e << endl;
+//    }
     return 0;
+}
+
+void OpenDataServer::joinThread() {
+    open_server_thread.join();
 }

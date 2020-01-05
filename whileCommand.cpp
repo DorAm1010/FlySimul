@@ -2,6 +2,8 @@
 // Created by dor on 1/3/20.
 //
 #include "readingData.h"
+#include "whileCommand.h"
+
 /**
  * The while command executes rely on its if command member field
  * because a while command is essentially an if command repeating itself
@@ -21,4 +23,5 @@ int WhileCommand::execute() {
         // if start_index is x and current is y -> z = y + (x - y) = x = start_index
         readingData->incInd(start_index - current_index);
     }
+    return 0;
 }

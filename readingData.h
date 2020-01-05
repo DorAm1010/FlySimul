@@ -2,14 +2,13 @@
 // Created by Laliv on 27/12/2019.
 //
 
-#ifndef EX3_READINGDATA_H
-#define EX3_READINGDATA_H
+#ifndef FLYSIMUL_READINGDATA_H
+#define FLYSIMUL_READINGDATA_H
 
 #include "varStruct.h"
 #include "command.h"
 #include <unordered_map>
-
-using namespace std;
+#include <vector>
 
 class ReadingData {
 private:
@@ -23,37 +22,33 @@ private:
     int index;
 
     /*vector of the instructions separate to words*/
-    vector<string> words;
+    std::vector<std::string> words;
 
     /*map from name to VarStruct*/
-    unordered_map<string, VarStruct *> nameToVariableMap;
+    std::unordered_map<std::string, VarStruct *> nameToVariableMap;
 
     /*map from sim address to VarStruct*/
-    unordered_map<string, VarStruct *> simToVariableMap;
+    std::unordered_map<std::string, VarStruct *> simToVariableMap;
 
     /*should the program still run*/
     bool should_run;
 
     // information map about existing vars that update the simulator
-    unordered_map<string, int> indexMap;
+    std::unordered_map<std::string, int> nameToIndexMap;
 
-    unordered_map<string, int> nameToIndexMap;
+    std::unordered_map<std::string, VarStruct*> privateVarsMap;
 
-    unordered_map<string, VarStruct*> privateVarsMap;
-
-    vector<string> messages;
+    std::vector<std::string> messages;
 
 public:
 /* Static access method. */
     static ReadingData *getInstance();
 
-    unordered_map<string, VarStruct *>* getNameToVariableMap();
+    std::unordered_map<std::string, VarStruct *>* getNameToVariableMap();
 
-    unordered_map<string, VarStruct *>* getSimToVariableMap();
+    std::vector<std::string>* getWordsVector();
 
-    vector<string>* getWordsVector();
-
-    void setWords(vector<string> v);
+    void setWords(std::vector<std::string> v);
 
     int getInd();
 
@@ -63,31 +58,29 @@ public:
 
     bool getShouldRun();
 
-    void addToNameMap(string, VarStruct *);
+    void addToNameMap(const std::string&, VarStruct *);
 
-    void addToSimMap(string, VarStruct *);
+    void addToSimMap(const std::string&, VarStruct *);
 
-    void addToPrivateVarsMap(string, VarStruct *);
+    void addToPrivateVarsMap(const std::string&, VarStruct *);
 
-    int findInNameMap(const string&);
+    int findInNameMap(const std::string&);
 
-    int findInSimMap(const string&);
+    int findInPrivateVarsMap(const std::string& name);
 
-    int findInPrivateVarsMap(const string& name);
+    std::unordered_map<std::string, VarStruct*>* getPrivateVarsMap();
 
-    void updateInNameMap(const string&, double);
+    void updateInNameMap(const std::string&, double);
 
-    void updateInPrivateVarsMap(const string& name, double val);
+    void updateInPrivateVarsMap(const std::string& name, double val);
 
-    void updateInSimMap(const string&, double);
+    void updateFromSimulator(std::vector<double>);
 
-    void updateFromSimulator(vector<double>);
+    void addToMessages(const std::string&);
 
-    void addToMessages(string);
+    std::vector<std::string>* getMessages();
 
-    vector<string>* getMessages();
-
-    VarStruct* returnVarStruct(string);
+    VarStruct* returnVarStruct(const std::string&);
 };
 
 

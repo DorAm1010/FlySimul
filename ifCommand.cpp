@@ -1,22 +1,40 @@
 //
 // Created by dor on 1/3/20.
 //
+#include <mutex>
 #include "readingData.h"
+#include "ifCommand.h"
+#include "printCommand.h"
+#include "assignValue.h"
+#include "sleepCommand.h"
 
+using namespace std;
 
 int IfCommand::execute() {
     unordered_map<string, Command*> commands;
+    mutex mutex;
     ReadingData* readingData = ReadingData::getInstance();
     PrintCommand printCommand;
     SleepCommand sleepCommand;
-    // AssignValueCommand assignValueCommand;
+    AssignValueCommand assignValueCommand;
     commands.insert({{"Print", &printCommand}, {"Sleep", &sleepCommand}});
     for (auto& element : *readingData->getNameToVariableMap()) {
-        // commands[element.first] = &assignValueCommand;
+        mutex.lock();
+        commands[element.first] = &assignValueCommand;
+        mutex.unlock();
     }
+
+    for (auto& element : *readingData->getPrivateVarsMap()) {
+        mutex.lock();
+        commands[element.first] = &assignValueCommand;
+        mutex.unlock();
+    }
+
+    condition = false;
     condition = verify();
 
     if (condition) {
+        // while scope hasn't ended
         while (readingData->getWordsVector()->at(readingData->getInd()) != "}") {
             if (commands.find(readingData->getWordsVector()->at(readingData->getInd())) != commands.end()) {
                 commands.at(readingData->getWordsVector()->at(readingData->getInd()))->execute();
@@ -48,32 +66,32 @@ bool IfCommand::verify() {
     readingData->incInd(1);
     string right_expression = readingData->getWordsVector()->at(readingData->getInd());
 
-//    double left_ex_val = evaluate(left_expression);
-//    double right_ex_val = evaluate(right_expression);
-//
-//    if (condition_operator == ">"){
-//        if (left_ex_val > right_ex_val) {
-//            condition_is_maintained = true;
-//        }
-//    } else if (condition_operator == ">="){
-//        if (left_ex_val >= right_ex_val) {
-//            condition_is_maintained = true;
-//        }
-//    } else if (condition_operator == "<"){
-//        if (left_ex_val < right_ex_val) {
-//            condition_is_maintained = true;
-//        }
-//    } else if (condition_operator == "<="){
-//        if (left_ex_val <= right_ex_val) {
-//            condition_is_maintained = true;
-//        }
-//    } else if (condition_operator == "=="){
-//        if (left_ex_val == right_ex_val) {
-//            condition_is_maintained = true;
-//        }
-//    } else if (condition_operator == "!="){
-//        if (left_ex_val != right_ex_val) {
-//            condition_is_maintained = true;
-//        }
-//    }
+    double left_ex_val = evaluate(left_expression);
+    double right_ex_val = evaluate(right_expression);
+
+    if (condition_operator == ">"){
+        if (left_ex_val > right_ex_val) {
+            condition = true;
+        }
+    } else if (condition_operator == ">="){
+        if (left_ex_val >= right_ex_val) {
+            condition = true;
+        }
+    } else if (condition_operator == "<"){
+        if (left_ex_val < right_ex_val) {
+            condition = true;
+        }
+    } else if (condition_operator == "<="){
+        if (left_ex_val <= right_ex_val) {
+            condition = true;
+        }
+    } else if (condition_operator == "=="){
+        if (left_ex_val == right_ex_val) {
+            condition = true;
+        }
+    } else if (condition_operator == "!="){
+        if (left_ex_val != right_ex_val) {
+            condition = true;
+        }
+    }
 }

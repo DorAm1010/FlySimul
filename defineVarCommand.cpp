@@ -3,14 +3,15 @@
 //
 #include "readingData.h"
 #include "ex1.h"
+#include "defineVar.h"
 
 using namespace std;
 
 int DefineVarCommand::execute() {
     ReadingData* readingData = ReadingData::getInstance();
+    readingData->incInd(1);
     string name = readingData->getWordsVector()->at(readingData->getInd());
     VarStruct varStruct;
-    double expression;
 
     // inc to get wrap direction string
     readingData->incInd(1);
@@ -40,3 +41,4 @@ int DefineVarCommand::execute() {
 
     readingData->incInd(1);
 }
+

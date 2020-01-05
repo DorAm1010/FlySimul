@@ -1,20 +1,18 @@
 //
 // Created by Laliv on 20/12/2019.
 //
+#ifndef FLYSIMUL_VARSTRUCT_H
+#define FLYSIMUL_VARSTRUCT_H
+
 #include <string>
-
-#ifndef EX3_VARSTRUCT_H
-#define EX3_VARSTRUCT_H
-
-using namespace std;
 
 class VarStruct {
     double val;
-    string sim;
+    std::string sim;
 public:
-    void setSim(const string &sim);
+    void setSim(const std::string &sim);
 
-    const string &getSim() const;
+    const std::string &getSim() const;
 
     void setVal(double new_val);
 
