@@ -7,7 +7,6 @@
 
 #include "varStruct.h"
 #include "command.h"
-#include <unordered_map>
 
 using namespace std;
 
@@ -39,45 +38,78 @@ private:
 
     unordered_map<string, int> nameToIndexMap;
 
-    vector<string> messages;
-
 public:
 /* Static access method. */
+    /**
+     * @return the only object of type ReadingData.
+     */
     static ReadingData *getInstance();
 
-    unordered_map<string, VarStruct *>* getNameToVariableMap();
+    /**
+     * @return map in which the key is the variable name and the value
+     * is a struct that keep all the information about that variable.
+     */
+    unordered_map<string, VarStruct *> getNameToVariableMap();
 
-    unordered_map<string, VarStruct *>* getSimToVariableMap();
+    /**
+     * @return  map in which the key is the variable simulator address and the value
+     * is a struct that keep all the information about that variable.
+     */
+    unordered_map<string, VarStruct *> getSimToVariableMap();
 
-    vector<string>* getWordsVector();
+    /**
+     * @return vector of words, aka the text after lexering.
+     */
+    vector<string> getWordsVector();
 
+    /**
+     * gives an option to reset the text we read.
+     * @param v new words vector.
+     */
     void setWords(vector<string> v);
 
+    /**
+     * @return index of the word we are now reading.
+     */
     int getInd();
 
+    /**
+     * @param add increase the index of reading by add.
+     */
     void incInd(int add);
 
+    /**
+     * flag that represent if there is still something to read or should we stop.
+     * @param b true if starting to read, false if we are done.
+     */
     void setShouldRun(bool b);
 
+    /**
+     * flag that represent if there is still something to read or should we stop.
+     * @return b true if we are still reading, false otherwise.
+     */
     bool getShouldRun();
 
+    /**
+     * adds new variable to the <variableName, VarStruct> map.
+     */
     void addToNameMap(string, VarStruct *);
 
     void addToSimMap(string, VarStruct *);
 
     int findInNameMap(const string&);
-
-    int findInSimMap(const string&);
-
+//
+//    int findInSimMap(const string&);
+//
     void updateInNameMap(const string&, double);
+//
+//    void updateInSimMap(const string&, double);
 
-    void updateInSimMap(const string&, double);
+    VarStruct* returnVarStruct(string);
 
     void updateFromSimulator(vector<double>);
 
-    void addToMessages(string);
-
-    vector<string>* getMessages();
+    void addToMassages(string) {};
 };
 
 
