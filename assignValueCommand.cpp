@@ -1,6 +1,7 @@
 //
 // Created by Laliv on 03/01/2020.
 //
+#include "command.h"
 #include "readingData.h"
 
 using namespace std;
@@ -8,15 +9,20 @@ using namespace std;
 /**
  * assign new value to an existing variable.
  */
-void AssignValueCommand::execute() {
+int AssignValueCommand::execute() {
     ReadingData* rd = ReadingData::getInstance();
     int ind = rd->getInd();
-    vector<string> words = rd->getWordsVector();
-    double newVal = stod(words[ind + 2]);
-    rd->updateInNameMap(words[ind], newVal);
-    VarStruct* s = rd->returnVarStruct(words[ind]);
-    string massage = "set /" + s->getSim() + words[ind + 2] + "\r\n";
-    rd->addToMessages(massage);
+    vector<string>* words = rd->getWordsVector();
+    double newVal = stod((*words)[ind + 2]);
+    string var = (*words)[ind];
+    if(rd->findInNameMap(var) == 1) {
+        rd->updateInNameMap(var, newVal);
+        VarStruct *s = rd->returnVarStruct(var);
+        string massage = "set /" + s->getSim() + (*words)[ind + 2] + "\r\n";
+        rd->addToMessages(massage);
+    } else if(rd->findInPrivateVarsMap(var) == 1) {
+        rd->updateInPrivateVarsMap(var, newVal);
+    }
 
     rd->incInd(3);
 }

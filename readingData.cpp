@@ -119,6 +119,10 @@ void ReadingData::addToSimMap(string name, VarStruct* varStruct) {
     simToVariableMap[name] = varStruct;
 }
 
+void ReadingData::addToPrivateVarsMap(string name, VarStruct* varStruct) {
+    privateVarsMap[name] = varStruct;
+}
+
 int ReadingData::findInNameMap(const string& name) {
     if (nameToVariableMap.find(name) != nameToVariableMap.end()) {
         return 1;
@@ -131,8 +135,18 @@ int ReadingData::findInSimMap(const string& name) {
     }
     return 0;
 }
+int ReadingData::findInPrivateVarsMap(const string& name) {
+    if (privateVarsMap.find(name) != privateVarsMap.end()) {
+        return 1;
+    }
+    return 0;
+}
 void ReadingData::updateInNameMap(const string& name, double val) {
     nameToVariableMap.find(name)->second->setVal(val);
+}
+
+void ReadingData::updateInPrivateVarsMap(const string& name, double val) {
+    privateVarsMap.find(name)->second->setVal(val);
 }
 
 void ReadingData::updateInSimMap(const string& name, double val) {
@@ -164,4 +178,8 @@ vector<string>* ReadingData::getMessages() {
 
 void ReadingData::addToMessages(string message) {
     messages.push_back(message);
+}
+
+VarStruct* ReadingData::returnVarStruct(string var) {
+    return nameToVariableMap.find(var)->second;
 }
