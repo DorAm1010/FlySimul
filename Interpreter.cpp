@@ -11,12 +11,19 @@
 #include "ex1.h"
 using namespace std;
 
+/**
+ * constructor.
+ **/
 Interpreter::Interpreter() {
     variableVec = new vector<string>();
     valuesVec = new vector<double>();
 }
 
-
+/**
+ * interpret a string that represent an expression, to expression.
+ * @param exString string representation of expression.
+ * @return expression.
+ **/
 Expression* Interpreter::interpret(string exString) {
 
 	stack <string> operatorStack;
@@ -55,9 +62,7 @@ Expression* Interpreter::interpret(string exString) {
 
 			ind = endInd - 1;
 
-
 		}
-
 
 		else if(exString[ind] == '(') {
 			operatorStack.push("(");
@@ -85,11 +90,7 @@ Expression* Interpreter::interpret(string exString) {
                     throw e;
 				}
 
-
 				if(pre == 1) {
-
-				
-
 
                     if (!operatorStack.empty()) {
                         int preTop = operatorPre(operatorStack.top());
@@ -125,15 +126,12 @@ Expression* Interpreter::interpret(string exString) {
                             }
                         }
 
-
                         if(exString[ind] == '+') {
                             operatorStack.push("+");
                         } else {
                             operatorStack.push("-");
                         }
-
 					}
-					
 				}
 			}
 		}
@@ -158,7 +156,6 @@ Expression* Interpreter::interpret(string exString) {
 			}
 		} else {
 
-			
 			if(isalpha(exString[ind])) {
 
 				int endInd = ind;
@@ -179,10 +176,7 @@ Expression* Interpreter::interpret(string exString) {
 
 				ind = endInd - 1;
 			}
-
 		}
-
-		
 	}
 
 	// empty stack into the queue
@@ -191,14 +185,14 @@ Expression* Interpreter::interpret(string exString) {
 			operatorStack.pop();
 	}
 
-
-
 	return produceExpression(outputQueue);
-
-
-
 }
 
+/**
+ * checks an operator/character precedence.
+ * @param c operator/character.
+ * @return c's precedence.
+ */
  int Interpreter::operatorPre(string c) {
 
  	if(c == "+" || c == "-") {
@@ -216,6 +210,11 @@ Expression* Interpreter::interpret(string exString) {
  	return 0;
  }
 
+ /**
+  * produce an expression from a postfix queue.
+  * @param q postfix queue.
+  * @return expression.
+  */
  Expression* Interpreter::produceExpression(queue <string> q) {
  	stack <Expression*> s;
  	int pre;
@@ -249,17 +248,10 @@ Expression* Interpreter::interpret(string exString) {
             s.push(finalEx);
             q.pop();
 
-
-
-
-
         } else {
 
-
-                ex1 = s.top();
-                s.pop();
-
-
+            ex1 = s.top();
+            s.pop();
 
             topOp = q.front();
             q.pop();
@@ -268,7 +260,6 @@ Expression* Interpreter::interpret(string exString) {
                 ex2 = s.top();
                 s.pop();
             }
-
 
             switch (topOp[0]) {
                 case '^':
@@ -293,7 +284,6 @@ Expression* Interpreter::interpret(string exString) {
                     s.push(finalEx);
 
 
-
             first = false;
         }
     }
@@ -302,6 +292,10 @@ Expression* Interpreter::interpret(string exString) {
 
  }
 
+ /**
+  * set variables and their values, for future evaluations.
+  * @param s variables to set, in form - "var1=value1;var2=value2...".
+  */
  void Interpreter::setVariables(string s) {
  	int end = 0;
  	int mid = 0;
@@ -344,6 +338,9 @@ Expression* Interpreter::interpret(string exString) {
  }
 
 
+ /**
+  * destructor.
+  */
  Interpreter::~Interpreter() {
      if(variableVec != NULL) {
        delete variableVec;
