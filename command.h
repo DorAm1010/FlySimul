@@ -26,14 +26,16 @@ public:
  */
 class EvaluateCommand: public Command {
 protected:
-    double evaluate(string expString);
+    double evaluate(const string& expString);
 };
 
 class OpenDataServer : public Command {
     void processInfo(char* );
     void openServer(int );
+    std::thread open_server_thread;
 public:
     int execute();
+    void joinThread();
 };
 
 /**
@@ -41,36 +43,31 @@ public:
  */
 class ConnectControlClient : public Command {
     void messageSim(int);
+    std::thread connect_thread;
 public:
     int execute();
+    void joinThread();
 };
 
 /**
  * assigning new value to a existing variable.
  */
 class AssignValueCommand: public EvaluateCommand {
-    double evaluate(string);
 public:
     int execute();
 };
 
 class DefineVarCommand : public EvaluateCommand {
-    double evaluate(string);
-
 public:
     int execute();
 };
 
 class PrintCommand : public EvaluateCommand {
-    double evaluate(string);
-
 public:
     int execute();
 };
 
 class SleepCommand : public EvaluateCommand {
-    double evaluate(string);
-
 public:
     int execute();
 };
@@ -78,15 +75,11 @@ public:
 class IfCommand : public EvaluateCommand {
     bool condition;
     bool verify();
-    double evaluate(string);
-
 public:
     int execute();
 };
 
 class WhileCommand : public EvaluateCommand {
-    double evaluate(string);
-
 public:
     IfCommand ifCommand;
     int execute();
