@@ -30,13 +30,13 @@ int DefineVarCommand::execute() {
         // add to simToVarMap
         varStruct.setSim(sim_or_expression);
         readingData->addToSimMap(name, &varStruct);
-    } else { // is =
-        // TODO - get double representation of val to update in map which means USE INTERPRETER CLASS FROM EX1
-        if (readingData->findInNameMap(name)) {
-            // format is var x = expression
-            // expression = evaluate(sim_or_expression);
-            // insert to symTable
-        }
+    } else if (wrap == "=") { // is =
+            double val = evaluate(sim_or_expression);
+            varStruct.setVal(val);
+            readingData->addToPrivateVarsMap(name, &varStruct);
+    } else {
+        throw("define var error");
     }
+
     readingData->incInd(1);
 }

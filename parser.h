@@ -9,12 +9,16 @@
 
 using namespace std;
 
+/**
+ * a class
+ */
 class Parser{
 private:
-    int index;
+    ConnectControlClient client;
+    OpenDataServer server;
     ReadingData* readingData;
     unordered_map<string, Command*> cmdMap;
-    vector<string> words;
+    vector<string>* words;
 public:
     void Pars();
     Parser();
