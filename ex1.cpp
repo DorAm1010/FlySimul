@@ -132,6 +132,10 @@ double UPlus :: calculate()
 
 //UMinus
 
+/**
+* constructor. gets one expression for unary minus.
+* @param ex expression which is save as a unary minus.
+**/
 UMinus :: UMinus(Expression* ex): UnaryOperator(ex) {}
 
 double UMinus :: calculate()
@@ -142,6 +146,9 @@ double UMinus :: calculate()
 //BinaryOperator
 
 
+/**
+* destructor, delete tow expressions.
+**/
 BinaryOperator :: ~BinaryOperator()
 {
     delete left;
@@ -149,22 +156,37 @@ BinaryOperator :: ~BinaryOperator()
 }
 
 
+/**
+* calculates the value of the binary plus.
+* @return the result.
+**/
 double Plus :: calculate()
 {
     return left->calculate() + right->calculate();
 }
 
-
+/**
+* calculates the value of the binary minus.
+* @return the result.
+**/
 double Minus :: calculate()
 {
     return left->calculate() - right->calculate();
 }
 
+/**
+* calculates the value of the binary mult.
+* @return the result.
+**/
 double Mul :: calculate()
 {
     return left->calculate() * right->calculate();
 }
 
+/**
+* calculates the value of the binary division.
+* @return the result.
+**/
 double Div :: calculate()
 {
     double rightCal = right->calculate();
