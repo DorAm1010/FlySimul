@@ -4,6 +4,13 @@ This project connects as a client and server to FlighGear simulator.
 ## Installation
 in oreder to use this projects you need to download Flightgear, preferrably 2019.
 
+## Compilation
+g++ -std=c++14 *.cpp -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -o a.out -pthread
+
+## Run
+./a.out file_name.txt
+explanations about what file_name.txt should include @ ##Usage
+
 ## Usage
 insert a .txt file in cmd line containing instructions to the simulator with wrap directions
 about information in the simulator for example "propelor -> ("/address_in_simulator")"
@@ -25,6 +32,7 @@ If: if condition: in this format - "if left expression conditional operator righ
 While: same format as if.
 Assign command: assigning a variable that you have defined before in this format: variable_name = some_mathematical_expression.
 this program will first lex all the words in the .txt file then parse the words and operate on appropriate meaning.
+All files should reside in the same folder.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
