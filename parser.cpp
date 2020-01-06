@@ -1,6 +1,7 @@
 //
 // Created by Laliv on 23/12/2019.
 //
+#include <iostream>
 #include "parser.h"
 #include "ifCommand.h"
 #include "printCommand.h"
@@ -18,8 +19,6 @@ using namespace std;
  * the commands according to order.
  */
 void Parser::Pars() {
-    
-    //creates all types of commands and insert them into cmdMap.
     unordered_map<std::string, Command*> cmdMap;
     vector<string>* vector;
     Command* c;
@@ -41,20 +40,20 @@ void Parser::Pars() {
     cmdMap.insert({"openDataServer", &server});
     cmdMap.insert({"connectControlClient", &client});
     cmdMap.insert({"Sleep", &sleep});
-    cmdMap.insert({"While", &whle});
-    cmdMap.insert({"If", &iff});
+    cmdMap.insert({"while", &whle});
+    cmdMap.insert({"if", &iff});
 
     readingData->setShouldRun(true);
 
     int index = readingData->getInd();
 
-    //while there is still something to read, execute the next command.
-    //asume we are alwayes reading a word representing a command,
-    //aka all the index had been incremented correctly.
     while (index < vector->size()) {
         if(readingData->findInNameMap(vector->at(index)) == 1) {
             c = cmdMap.find("assign")->second;
         } else {
+            if (index == 137) {
+                cout<< "meow" << endl;
+            }
             c = cmdMap.find(vector->at(index))->second;
 
             if(c == NULL) {
@@ -64,13 +63,11 @@ void Parser::Pars() {
 
         c->execute();
 
-        //get the new index after executing the command.
         index = readingData->getInd();
     }
 
     readingData->setShouldRun(false);
 
-    //join the threads
     dynamic_cast<OpenDataServer*>(cmdMap.at("openDataServer"))->joinThread();
     dynamic_cast<ConnectControlClient*>(cmdMap.at("connectControlClient"))->joinThread();
 

@@ -2,6 +2,8 @@
 // Created by Laliv on 27/12/2019.
 //
 
+#include <iostream>
+#include <mutex>
 #include "readingData.h"
 
 using namespace std;
@@ -19,6 +21,10 @@ ReadingData* ReadingData::getInstance()
     return instance;
 }
 
+/**
+ * Set name to index map, i.e. information sent from simulator,
+ * this map assists the sim to variable map with the update.
+ **/
 ReadingData::ReadingData()
 {
     nameToIndexMap["instrumentation/airspeed-indicator/indicated-speed-kt"] = 1;
@@ -62,22 +68,17 @@ ReadingData::ReadingData()
 
 vector<string>* ReadingData::getWordsVector()
 {
-    if (instance == 0)
-    {
-        instance = new ReadingData();
-    }
-
     return &instance->words;
 }
 
 unordered_map<string,VarStruct*>* ReadingData::getNameToVariableMap()
 {
-    if (instance == 0)
-    {
-        instance = new ReadingData();
-    }
-
     return &instance->nameToVariableMap;
+}
+
+unordered_map<string,VarStruct*>* ReadingData::getSimMap()
+{
+    return &instance->simToVariableMap;
 }
 
 void ReadingData::setWords(vector<string> v)
@@ -93,6 +94,10 @@ int ReadingData::getInd()
 void ReadingData::incInd(int add)
 {
     instance->index += add;
+}
+
+void ReadingData::setInd(int i) {
+    instance->index = i;
 }
 
 void ReadingData::setShouldRun(bool b) {
@@ -144,23 +149,26 @@ void ReadingData::updateInPrivateVarsMap(const string& name, double val) {
  * a pair of <key, value> pairs where the key is the sim path and the value is its
  * appropriate index, the method will set the appropriate value in the sim to var map.
  * */
-void ReadingData::updateFromSimulator (vector<double> vector) {
-    int newVal;
+void ReadingData::updateFromSimulator (vector<double>* vector) {
+    int newValIndex;
     string sim;
+    mutex mutex;
 
     for (auto& element: simToVariableMap) {
+        mutex.lock();
         sim = element.second->getSim();
-        newVal = nameToIndexMap.find(sim)->second;
-        element.second->setVal(vector.at(newVal));
+        newValIndex = nameToIndexMap.find(sim)->second - 1;
+        element.second->setVal(vector->at(newValIndex));
+        mutex.unlock();
     }
 }
 
-vector<string>* ReadingData::getMessages() {
+queue<string>* ReadingData::getMessages() {
     return &instance->messages;
 }
 
 void ReadingData::addToMessages(const string& message) {
-    messages.push_back(message);
+    messages.push(message);
 }
 
 VarStruct* ReadingData::returnVarStruct(const string& var) {

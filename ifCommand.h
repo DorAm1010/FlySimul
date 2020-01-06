@@ -7,6 +7,9 @@
 
 #include "evaluateCommand.h"
 
+/**
+ * If command class handles an if case in input text.
+ **/
 class IfCommand : public EvaluateCommand {
     bool condition;
     bool verify();

@@ -1,4 +1,4 @@
-#include "Lexer.h"
+#include "lexer.h"
 #include <fstream>
 #include <string>
 
@@ -9,7 +9,7 @@ using namespace std;
  * @param fileName the file name.
  * @return vector of words.
  */
-vector<string> Lexer::Lex(const string fileName) {
+vector<string> Lexer::lex(const string fileName) {
     vector<string> words;
 
     ifstream objFile;
@@ -40,7 +40,8 @@ vector<string> Lexer::Lex(const string fileName) {
             if(x == '{') {
                 inExp = false;
             }
-            if (inExp == false && inString == false && (x == ' ' | x == '(' | x == ')' | x == ',' | x == '\t' | x == '=' | (x == '{' && word != "")))
+            if (inExp == false && inString == false &&
+            (x == ' ' | x == '(' | x == ')' | x == ',' | x == '\t' | x == '=' | (x == '{' && word != "")))
             {
                 if(x == '=') {
                     inExp = true;
@@ -92,5 +93,3 @@ vector<string> Lexer::Lex(const string fileName) {
     objFile.close();
     return words;
 }
-
-

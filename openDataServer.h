@@ -6,7 +6,10 @@
 #define FLYSIMUL_OPENDATASERVER_H
 #include <thread>
 #include "command.h"
-
+/**
+ * OpenDataServer class, as its' name suggests, handles
+ * opening a server to communicate a client.
+ **/
 class OpenDataServer : public Command {
     void processInfo(char* );
     void openServer(int );

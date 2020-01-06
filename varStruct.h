@@ -6,17 +6,14 @@
 
 #include <string>
 
-/**
-* this class is a template for object that saves all the data about
-* a single variable, including its value, name, and address in the simulator.
-**/
 class VarStruct {
     double val;
+    // address in simulator
     std::string sim;
 public:
-    void setSim(const std::string &sim);
+    void setSim(std::string sim);
 
-    const std::string &getSim() const;
+    std::string getSim() const;
 
     void setVal(double new_val);
 

@@ -1,8 +1,5 @@
 #include "Interpreter.h"
 
-/**
-* this class represent a number.
-**/
 class Value: public Expression {
 private:
     const double val;
@@ -12,9 +9,6 @@ public:
     virtual ~Value();
 };
 
-/**
-* this class represent a Variable that has an assigned value.
-**/
 class Variable: public Expression {
 private:
     std::string name;
@@ -32,10 +26,6 @@ public:
 
 };
 
-/**
-* this is an abstract class that represent an unary operator
-* that holds one expression.
-**/
 class UnaryOperator: public Expression {
 protected:
     Expression* ex;
@@ -44,10 +34,7 @@ public:
     virtual ~UnaryOperator();
 };
 
-/**
-* this class represent an unary plus expression,
-* aka an expression with a plus before him.
-**/
+
 class UPlus: public UnaryOperator {
 public:
     UPlus(Expression* ex);
@@ -55,10 +42,6 @@ public:
     virtual ~UPlus() {};
 };
 
-/**
-* this class represent an unary minus expression.
-* aka an expression with a minus before him.
-**/
 class UMinus: public UnaryOperator {
 public:
     UMinus(Expression* ex);
@@ -66,10 +49,6 @@ public:
     virtual ~UMinus() {};
 };
 
-/**
-* this is an abstract class that represent a binary operator
-* that holds tow expressions.
-**/
 class BinaryOperator: public Expression {
 protected:
     Expression* right;
@@ -80,10 +59,6 @@ public:
     virtual ~BinaryOperator();
 };
 
-/**
-* this class represent a binary plus on tow expressions,
-* and knows to calculate the sum of them. 
-**/
 class Plus: public BinaryOperator {
 public:
     Plus(Expression* left, Expression* right): BinaryOperator(left, right) {}
@@ -92,10 +67,6 @@ public:
     virtual ~Plus() {};
 };
 
-/**
-* this class represent a binary minus on tow expressions,
-* and knows to calculate the substraction of them. 
-**/
 class Minus: public BinaryOperator {
 public:
     Minus(Expression* left, Expression* right): BinaryOperator(left, right) {}
@@ -104,11 +75,6 @@ public:
     virtual ~Minus() {};
 };
 
-
-/**
-* this class represent a multiply of tow expressions,
-* and knows to calculate the multiplication of them. 
-**/
 class Mul: public BinaryOperator {
 public:
     Mul(Expression* left, Expression* right): BinaryOperator(left, right) {}
@@ -117,10 +83,6 @@ public:
     virtual ~Mul() {};
 };
 
-/**
-* this class represent a division of tow expressions,
-* and knows to calculate the division of them. 
-**/
 class Div: public BinaryOperator {
 public:
     Div(Expression* left, Expression* right): BinaryOperator(left, right) {}

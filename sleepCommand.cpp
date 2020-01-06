@@ -6,10 +6,10 @@
 #include "readingData.h"
 #include "sleepCommand.h"
 using namespace std;
+
 /**
- * Sleep command makes main thread sleep for as long as input value is
- * according to its value interpreted by evaluate command.
- * */
+ * Execute sleep command.
+ **/
 int SleepCommand::execute() {
     ReadingData* readingData = ReadingData::getInstance();
     // increment to get to sleep func argument

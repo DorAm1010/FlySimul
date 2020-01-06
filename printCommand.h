@@ -6,7 +6,10 @@
 #define FLYSIMUL_PRINTCOMMAND_H
 
 #include "evaluateCommand.h"
-
+/**
+ * Print command prints whatever message or value the user had inputted
+ * in the argument.
+ * */
 class PrintCommand : public EvaluateCommand {
 public:
     int execute();

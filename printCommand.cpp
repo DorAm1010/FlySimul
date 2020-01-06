@@ -5,10 +5,10 @@
 #include "readingData.h"
 #include "printCommand.h"
 using namespace std;
+
 /**
- * Print command prints whatever message or value the user had inputted
- * in the argument.
- * */
+ * Execute print command.
+ **/
 int PrintCommand::execute() {
     ReadingData* readingData = ReadingData::getInstance();
     string print;
@@ -16,6 +16,7 @@ int PrintCommand::execute() {
     readingData->incInd(1);
     print = readingData->getWordsVector()->at(readingData->getInd());
     double expression;
+
     // if argument has quotes its a message to be printed without it
     if(print[0] == '"') {
         cout << print.substr(1, print.length() - 2) << endl;

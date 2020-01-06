@@ -7,9 +7,9 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <mutex>
 #include "readingData.h"
 #include "openDataServer.h"
-#include <mutex>
 using namespace std;
 /**
  * the information received from the simulator, i.e. comma separated values,
@@ -21,35 +21,7 @@ using namespace std;
  * That vector will be sent to be processed in updateFromSimulator.
  * */
 void OpenDataServer::processInfo(char* buffer) {
-    char delimiter = ',';
-    char back_slash_n = '\n';
-    // map value
-    string str_value;
-    // value by location from sim input
-    std::size_t val_num = 0;
-    int i = 0;
-    vector<double> values;
-    ReadingData* readingData = ReadingData::getInstance();
 
-    while (buffer[i] != back_slash_n) {
-        i++;
-    }
-
-    i++;
-
-    while (buffer[i] != back_slash_n) {
-        // concatenate string value between two commas
-        while(buffer[i] != delimiter) {
-            // if end of input
-            if(buffer[i] == back_slash_n)
-                break;
-            str_value += buffer[i];
-            i++;
-        }
-        values.push_back(stod(str_value));
-        i++;
-    }
-    readingData->updateFromSimulator(values);
 }
 /**
  * This method is in charge of establishing a connection to the
@@ -57,8 +29,7 @@ void OpenDataServer::processInfo(char* buffer) {
  * */
 void OpenDataServer::openServer(int port) {
 
-    std::mutex locker;
-
+    mutex mutex;
     //create socket
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
     if (socketfd == -1) {
@@ -86,17 +57,58 @@ void OpenDataServer::openServer(int port) {
         client_socket = accept(socketfd, (struct sockaddr *)&address,
                                (socklen_t*)&address);
     }
-    //reading from client
-    char buffer[1024] = {0};
-    int valread;
+
 
     // while the singleton instance says its ok to run this loop will run
     while (ReadingData::getInstance()->getShouldRun()) {
-        valread  = read( client_socket , buffer, 1024);
-        locker.lock();
-        // information received from the simulator to be processed
-        processInfo(buffer);
-        locker.unlock();
+        char delimiter = ',';
+        char back_slash_n = '\n';
+        // map value
+        string str_value = "";
+        // value by location from sim input
+        int i = 0;
+        vector<double> values;
+        ReadingData* readingData = ReadingData::getInstance();
+        char buffer[1024] = {0};
+
+        int valread = read( client_socket , buffer, 1024);
+        if (valread == -1) {
+            throw "Could not read from server";
+        }
+
+//        while (buffer[i] != back_slash_n) {
+//            i++;
+//            cout << i << endl;
+//        }
+//
+//        i++;
+
+        while (buffer[i] != back_slash_n) {
+            // concatenate string value between two commas
+            while(buffer[i] != delimiter) {
+                // if end of input
+                if(buffer[i] == back_slash_n)
+                    break;
+                str_value += buffer[i];
+                i++;
+            }
+
+            try {
+                double value = stod(str_value);
+                values.push_back(value);
+            } catch (exception &e) {
+                cout << e.what() << endl;
+            }
+
+            str_value = "";
+            if(buffer[i] == back_slash_n)
+                break;
+            i++;
+        }
+        if (values.size() == 36) {
+            readingData->updateFromSimulator(&values);
+            values.erase(values.begin(), values.end());
+        }
     }
 
     close(socketfd);

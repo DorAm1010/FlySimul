@@ -18,10 +18,7 @@ int WhileCommand::execute() {
     // if command execute returns 1 if condition worked 0 otherwise
     while (ifCommand.execute()) {
         // index currently pointed to after while scope was executed
-        current_index = readingData->getInd();
-        // essentially decrementing the index to point back to where condition starts
-        // if start_index is x and current is y -> z = y + (x - y) = x = start_index
-        readingData->incInd(start_index - current_index);
+        readingData->setInd(start_index);
     }
     return 0;
 }

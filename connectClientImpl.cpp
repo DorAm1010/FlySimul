@@ -7,6 +7,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <mutex>
+#include <cstring>
 #include "readingData.h"
 #include "connectControlClient.h"
 
@@ -44,22 +45,23 @@ int ConnectControlClient::execute() {
     connect_thread = std::thread(&ConnectControlClient::messageSim, &connectControlClient, client_socket);
 
 }
-
+/**
+ * This method runs all the while the parser is working,
+ * the method gets every message in the message vector and sends
+ * it to the simulator.
+ **/
 void ConnectControlClient::messageSim(int client_socket) {
-    // if = happened there is a message to send
     int is_sent;
-    mutex mutex;
+    string message;
     ReadingData* readingData = ReadingData::getInstance();
     while (readingData->getShouldRun()) {
-        if (!readingData->getMessages()->empty()) {
-            for (string message : *readingData->getMessages()) {
-                mutex.lock();
-                is_sent  = send(client_socket, &message, message.size(), 0);
-                if(is_sent == -1) {
-                    cout << "Error sending to server" << endl;
-                }
-                mutex.unlock();
+        while (!readingData->getMessages()->empty()) {
+            message = readingData->getMessages()->front();
+            is_sent  = send(client_socket, message.c_str(), strlen(message.c_str()), 0);
+            if(is_sent == -1) {
+                cout << "Error sending to server" << endl;
             }
+            readingData->getMessages()->pop();
         }
     }
     close(client_socket);

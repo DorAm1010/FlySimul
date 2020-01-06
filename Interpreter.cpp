@@ -90,7 +90,9 @@ Expression* Interpreter::interpret(string exString) {
                         while (preTop == 3 && !operatorStack.empty()) {
                             outputQueue.push(operatorStack.top());
                             operatorStack.pop();
-                            preTop = operatorPre(operatorStack.top());
+                            if(!operatorStack.empty()) {
+                                preTop = operatorPre(operatorStack.top());
+                            }
                         }
                     }
 

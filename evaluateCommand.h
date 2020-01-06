@@ -7,7 +7,7 @@
 
 #include "command.h"
 /**
- * interface for classes that needs to evaluate expressions.
+ * Father class for classes that needs to evaluate expressions.
  */
 class EvaluateCommand: public Command {
 protected:

@@ -9,6 +9,7 @@
 #include "command.h"
 #include <unordered_map>
 #include <vector>
+#include <queue>
 
 class ReadingData {
 private:
@@ -36,27 +37,42 @@ private:
     // information map about existing vars that update the simulator
     std::unordered_map<std::string, int> nameToIndexMap;
 
+    // information about variables that aren't related to simulator
     std::unordered_map<std::string, VarStruct*> privateVarsMap;
 
-    std::vector<std::string> messages;
+    // messages the simulator needs to receive
+    std::queue<std::string> messages;
 
 public:
-/* Static access method. */
+    /* Static access method. */
     static ReadingData *getInstance();
 
+    // getters
     std::unordered_map<std::string, VarStruct *>* getNameToVariableMap();
 
     std::vector<std::string>* getWordsVector();
 
-    void setWords(std::vector<std::string> v);
-
     int getInd();
 
-    void incInd(int add);
+    bool getShouldRun();
+
+    std::queue<std::string>* getMessages();
+
+    std::unordered_map<std::string, VarStruct*>* getPrivateVarsMap();
+
+    std::unordered_map<std::string, VarStruct*>* getSimMap();
+
+    VarStruct* returnVarStruct(const std::string&);
+
+    // setters
+    void setWords(std::vector<std::string> v);
 
     void setShouldRun(bool b);
 
-    bool getShouldRun();
+    // methods that change inner state
+    void incInd(int add);
+
+    void setInd(int i);
 
     void addToNameMap(const std::string&, VarStruct *);
 
@@ -64,23 +80,18 @@ public:
 
     void addToPrivateVarsMap(const std::string&, VarStruct *);
 
-    int findInNameMap(const std::string&);
-
-    int findInPrivateVarsMap(const std::string& name);
-
-    std::unordered_map<std::string, VarStruct*>* getPrivateVarsMap();
-
     void updateInNameMap(const std::string&, double);
 
     void updateInPrivateVarsMap(const std::string& name, double val);
 
-    void updateFromSimulator(std::vector<double>);
+    void updateFromSimulator(std::vector<double>*);
 
     void addToMessages(const std::string&);
 
-    std::vector<std::string>* getMessages();
+    // finders
+    int findInNameMap(const std::string&);
 
-    VarStruct* returnVarStruct(const std::string&);
+    int findInPrivateVarsMap(const std::string& name);
 };
 
 

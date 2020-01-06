@@ -8,8 +8,7 @@
 #include "readingData.h"
 
 /**
- * this class reads each command in the words vector that the lexer created,
- * and sends each command to execute.
+ * a class
  */
 class Parser{
 public:
