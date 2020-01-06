@@ -3,11 +3,17 @@
 using namespace std;
 
 
+/**
+* empty destructor.
+**/
 Value :: ~Value()
 {
 
 }
 
+/**
+* calculating the value of a value expression, meaning just returning his value.
+**/
 double Value:: calculate()
 
 {
@@ -16,47 +22,80 @@ double Value:: calculate()
 
 //Variable
 
+/**
+* constructor for variable.
+* @param n name of variable (the string that reoresent him).
+* @param d the value assigned to the variable.
+**/
 Variable :: Variable(string n, double d)
 {
     name = n;
     value = d;
 }
 
+/**
+* calculates the value of a variable expression,
+* meaning returning his value.
+**/
 double Variable :: calculate()
 {
     return value;
 }
 
+/**
+* operator ++ overloading.
+* @return pointer to this after ++.
+**/
 Variable& Variable :: operator++()
 {
     value += 1;
     return *this;
 }
 
+/**
+* operator -- overloading.
+* @return pointer to this after --.
+**/
 Variable& Variable :: operator--()
 {
     value -= 1;
     return *this;
 }
 
+/**
+* operator += overloading.
+* @return pointer to this after +=.
+**/
 Variable& Variable :: operator+=(double num)
 {
     value += num;
     return *this;
 }
 
+/**
+* operator -= overloading.
+* @return pointer to this after -=.
+**/
 Variable& Variable :: operator-=(double num)
 {
     value -= num;
     return *this;
 }
 
+/**
+* operator ++num overloading.
+* @return pointer to this after ++num.
+**/
 Variable& Variable :: operator++(int num)
 {
     value += 1;
     return *this;
 }
 
+/**
+* operator -- overloading.
+* @return pointer to this after --.
+**/
 Variable& Variable :: operator--(int num)
 {
     value -= 1;
@@ -66,6 +105,9 @@ Variable& Variable :: operator--(int num)
 //UnaryOperator
 
 
+/**
+* delete the only expression.
+**/
 UnaryOperator :: ~UnaryOperator()
 {
     delete ex;
@@ -73,8 +115,16 @@ UnaryOperator :: ~UnaryOperator()
 
 //UPlus
 
+/**
+* constructor. gets one expression for unary plus.
+* @param ex expression for unary plus.
+**/
 UPlus :: UPlus(Expression* ex): UnaryOperator(ex) {}
 
+/**
+* calculates the result of the unary plus.
+* @return 
+**/
 double UPlus :: calculate()
 {
     return ex->calculate();
