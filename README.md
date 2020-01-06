@@ -2,14 +2,20 @@
 This project connects as a client and server to FlighGear simulator.
 
 ## Installation
-in oreder to use this projects you need to download Flightgear, preferrably 2019.
+In oreder to use this projects you need to download Flightgear, preferrably 2019.
+You need an IDE that can run c++ projects.
 
 ## Compilation
+'''bash
 g++ -std=c++14 *.cpp -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -o a.out -pthread
+'''
 
 ## Run
-./a.out file_name.txt
 explanations about what file_name.txt should include @ ##Usage
+
+'''bash
+./a.out file_name.txt
+'''
 
 ## Usage
 insert a .txt file in cmd line containing instructions to the simulator with wrap directions
