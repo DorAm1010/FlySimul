@@ -5,7 +5,7 @@ int main(int argc, char* argv[]) {
     // TODO - compile time argument file
     // receive input file name
     ReadingData* readingData = ReadingData::getInstance();
-    const char* file_name = argv[0];
+    const char* file_name = argv[1];
     Lexer lexer;
     // pass file through lexer
     readingData->setWords(lexer.lex(file_name));
