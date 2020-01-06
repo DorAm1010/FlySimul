@@ -6,6 +6,15 @@
 #include "Interpreter.h"
 #include "evaluateCommand.h"
 using namespace std;
+
+/**
+* this method evaluates the value of an expression, according to the variables
+* values that are saved in the maps from ReadingData. the expression is
+* given as a string.
+* @param expString the string representing the expression.
+* the string should not contain spaces, and can contain
+* unary minus or plus for a number or a variable.
+**/
 double EvaluateCommand::evaluate(const string& expString) {
 
         Expression* expression;
