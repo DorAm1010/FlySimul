@@ -6,6 +6,10 @@
 
 #include <string>
 
+/**
+* this class is a template for object that saves all the data about
+* a single variable, including its value, name, and address in the simulator.
+**/
 class VarStruct {
     double val;
     std::string sim;
