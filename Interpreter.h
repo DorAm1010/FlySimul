@@ -4,12 +4,6 @@
 #include <vector>
 #include "Expression.h"
 
-/**
-* this class interpret a string that represent an expression,
-* into a real expression that can be evaluated after.
-* in case of variables in expression, assign values to 
-* all variables using setVariables method.
-**/
 class Interpreter {
 
 private:
